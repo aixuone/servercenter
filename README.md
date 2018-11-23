@@ -1,2 +1,1 @@
-# servercenter
-server center by ixu
+# modelpage
