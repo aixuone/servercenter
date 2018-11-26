@@ -1,0 +1,42 @@
+.login-box{
+    width: 450px ;
+    height: 350px;
+    background-color: #fff;
+    background-image:url('img/1.jpg');
+    border:1px solid $--color-primary;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    .login-title{
+        width: 100%;
+        font-size:18px;
+        text-align: center;
+        font-weight: bold;
+        color: $--color-primary;
+    }
+}
+.user-input {
+    width: 100%;
+    margin:0 auto;
+    padding-top:30px;
+    label{
+        display: inline-block;
+        width:80px;
+    }
+    .el-input {
+        width: 200px!important;
+    }
+}
+.login-btn-box{
+    margin:30px auto 0 auto;
+    width: 100px;
+    .login-btn{
+        width: 100px !important;
+        margin-bottom:30px;
+    }
+}
+.forms{
+    padding: 0 60px;
+}

@@ -37,10 +37,11 @@ header::after {
 .container {
   padding-top: 80px;
 }
-
+.menuBar{
+    background-color: $--color-menuBar;
+}
 .header-bar{
-    height: 80px!important;
-    background-color: $--color-primary;
+    height: 40px!important;   
 }
 
 .content {
@@ -55,22 +56,34 @@ header::after {
 .header-operations {
   display: inline-block;
   float: right;
-  padding-right: 30px;
+  padding-right: 10px;
   height: 100%;
 
   & li {
-    color:#fff;
+    font-size: 20px;
+    // color:#000;
     display: inline-block;
     vertical-align: middle;
     padding: 0 10px;
-    margin: 0 10px;
-    line-height: 80px;
+    margin: 0 5px;
+    line-height: 40px;
     cursor: pointer;
 
     &:last-child {
       cursor: default;
     }
+    & .rootname{
+        margin-left:5px;
+        font-style: normal;
+        color:$--color-primary;
+    }
   }
+  & li.xian{
+    border-right:1px #ccc solid;
+    height: 25px;
+    margin:0;
+    padding:0;
+}
 
   .header-download {
     opacity: 0.4;
@@ -130,4 +143,57 @@ header::after {
 
 .el-menu {
   height: 100%;
+}
+.breadxian {
+    height: 15px;
+    border-right: 4px solid $--color-primary;
+    width: 10px;
+    float: left;
+    margin: 0 3px;
+}
+.breadbottom{
+    width: 100%;
+    height: 15px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    background-color: #f2f2f2;
+}
+.pageArea{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+    height: 50px;
+    background-color: #fff;
+}
+.resource{
+    position:relative;
+    padding-bottom: 70px;
+}
+.menuBar{
+    & .el-menu-item{
+        font-size: 20px;
+        text-align: center;
+        color: #eee;
+    }
+    & .el-menu-item:hover{
+        color: $--color-primary;
+        background-color:#eee;
+    }
+    & .fa{
+        color: #909399;
+        font-size: 22px;
+        line-height: 56px;
+        height: 22px;
+        /* display: inline-block; */
+        vertical-align: top;
+        margin-right: 10px;
+    }
+    & .is-active{
+        color: #eee;
+        background-color: $--color-primary;
+    }
+}
+.el-dialog__body {
+    padding:20px 30px;
 }
