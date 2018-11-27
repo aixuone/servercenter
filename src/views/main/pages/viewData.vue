@@ -21,6 +21,7 @@
                     <el-form-item>
                         <el-input v-model="item.c" placeholder="输入名称/说明关键词"></el-input>
                     </el-form-item>
+                    <i class="fa fa-minus-circle" @click="handleDelThis(index)" style="font-size:20px,color:red"></i>
                 </div>
             </div>
             <el-form-item>
@@ -126,6 +127,12 @@ export default {
     },
     handleAddSer(){
         this.viewSearch.data.push({});
+    },
+    handleDelThis(index){
+        this.viewSearch.data.splice(index,1);
+        if (this.viewSearch.data.length == 0) {
+            this.viewSearch.data.push({});
+        }
     }
   } 
 };

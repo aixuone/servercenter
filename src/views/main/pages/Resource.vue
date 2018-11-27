@@ -32,7 +32,7 @@
                 <el-table-column prop="isDic" label="是否字典" width="150"></el-table-column>
                 <el-table-column prop="description" label="说明"></el-table-column>
                 <el-table-column label="操作" width="300">
-                    <template slot-scope="scope" >
+                    <template slot-scope="scope">
                         <el-button type="primary" size="small" @click="handleData(scope.row,scope.$index)">数据</el-button>
                         <el-button type="primary" size="small" @click="handleAttr(scope.row,scope.$index)">属性</el-button>
                         <el-button type="primary" size="small" @click="handleEdit(scope.row,scope.$index)">修改</el-button>
@@ -71,8 +71,8 @@
                     <el-input v-model="viewAdd.data.description" placeholder="请输入字段名"></el-input>
                 </el-form-item>
 
-                <selectObjAttr v-if="viewAdd.data.type=='数据集'" ></selectObjAttr>
-                
+                <selectObjAttr v-if="viewAdd.data.type=='数据集'"></selectObjAttr>
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="danger" @click="viewAdd.show = false">取消</el-button>
@@ -103,7 +103,7 @@
                 <el-form-item label="说明：">
                     <el-input v-model="viewEdit.data.description" placeholder="请输入字段名"></el-input>
                 </el-form-item>
-                <selectObjAttr v-if="viewEdit.data.type=='数据集'" ></selectObjAttr>
+                <selectObjAttr v-if="viewEdit.data.type=='数据集'"></selectObjAttr>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="danger" @click="viewEdit.show = false">取消</el-button>
@@ -122,7 +122,6 @@
         </el-dialog>
         <!-- 对话框 结束 -->
 
-        
     </div>
 </template>
 
@@ -300,17 +299,17 @@ export default {
       });
     },
     // 打开属性列表界面
-    handleAttr(item,index){
-        console.log(item,index);
-        if (item.type=="对象") {
-            this.$router.push({path: '/resource/object/'+item.id}); 
-        }else if(item.type=="数据集"){
-            this.$router.push({path: '/resource/dataset/'+item.id}); 
-        }
+    handleAttr(item, index) {
+      console.log(item, index);
+      if (item.type == "对象") {
+        this.$router.push({ path: "/resource/object/" + item.id });
+      } else if (item.type == "数据集") {
+        this.$router.push({ path: "/resource/dataset/" + item.id });
+      }
     },
     // 查看数据
-    handleData(item,index){
-        this.$router.push({path: '/resource/'+item.id+'/data'}); 
+    handleData(item, index) {
+      this.$router.push({ path: "/resource/" + item.id + "/data" });
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
