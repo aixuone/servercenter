@@ -54,7 +54,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/libs/axios";
+import api from "@/api/data-model/data";
+import { Message } from 'element-ui';
 export default {
   name: "viewDataObj",
   components: {},

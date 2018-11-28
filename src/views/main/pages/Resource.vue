@@ -327,11 +327,11 @@ export default {
       console.log(`每页 ${val} 条`);
       this.viewTable.pageInfo.page = 1;
       this.viewTable.pageInfo.pageSize = val;
-      handleSearch();
+      this.handleSearch();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-      handleSearch();
+      this.handleSearch();
     }
   }
 };
