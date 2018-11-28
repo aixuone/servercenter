@@ -28,8 +28,7 @@ export default{
    },
    methods:{
        loginBtn(){
-           console.log(this.username);
-           console.log(this.password);
+            this.$router.push({path:'/'});
        }
    }
 

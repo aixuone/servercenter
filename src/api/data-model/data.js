@@ -65,5 +65,7 @@ export default {
     editDataObjectAttr: params => {
         return axios.post('/data/object/attribute/update', params).then(res => {return res.data});
     },
-
+    viewData: params =>{
+        return axios.post('/data/retrieve',params).then(res =>{ return res.data});
+    }
 };
