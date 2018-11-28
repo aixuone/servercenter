@@ -17,8 +17,8 @@
                 <el-table-column prop="disRes" label="引用字典对象" ></el-table-column>
                 <el-table-column prop="rule" label="规则" width="100"></el-table-column>
                 <el-table-column prop="isNull" label="是否为空"></el-table-column>
-                <!-- <el-table-column prop="is" label="索引类型" width="100"></el-table-column> -->
-                <el-table-column prop="iskey" label="是否主键" ></el-table-column>
+                <el-table-column prop="indexType" label="索引类型" width="100"></el-table-column>
+                <el-table-column prop="isKey" label="是否主键" ></el-table-column>
                 <el-table-column prop="isIncrement" label="自增序列" width="100"></el-table-column>
                 <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
@@ -79,17 +79,17 @@
                         <el-radio v-model="viewAdd.data.isNull" label="false">否</el-radio>
                     </template>
                 </el-form-item> 
-                <!-- <el-form-item label="索引类型：" >
-                    <el-select v-model="viewAdd.data.iskey" placeholder="请选择">
+                <el-form-item label="索引类型：" >
+                    <el-select v-model="viewAdd.data.indexType" placeholder="请选择">
                         <el-option label="主键索引" value="主键索引"></el-option>
                         <el-option label="唯一索引" value="唯一索引"></el-option>
                         <el-option label="聚集索引" value="聚集索引"></el-option>
                     </el-select>
-                </el-form-item>  -->
+                </el-form-item> 
                 <el-form-item label="是否主键：" >
                     <template>
-                        <el-radio v-model="viewAdd.data.iskey" label="true">是</el-radio>
-                        <el-radio v-model="viewAdd.data.iskey" label="false">否</el-radio>
+                        <el-radio v-model="viewAdd.data.isKey" label="true">是</el-radio>
+                        <el-radio v-model="viewAdd.data.isKey" label="false">否</el-radio>
                     </template>
                 </el-form-item> 
                 <el-form-item label="自增序列：" >
@@ -153,17 +153,17 @@
                         <el-radio v-model="viewEdit.data.isNull" label="false">否</el-radio>
                     </template>
                 </el-form-item> 
-                <!-- <el-form-item label="索引类型：" >
-                    <el-select v-model="viewEdit.data.iskey" placeholder="请选择">
+                <el-form-item label="索引类型：" >
+                    <el-select v-model="viewEdit.data.indexType" placeholder="请选择">
                         <el-option label="主键索引" value="主键索引"></el-option>
                         <el-option label="唯一索引" value="唯一索引"></el-option>
                         <el-option label="聚集索引" value="聚集索引"></el-option>
                     </el-select>
-                </el-form-item>  -->
+                </el-form-item> 
                 <el-form-item label="是否主键：" >
                     <template>
-                        <el-radio v-model="viewEdit.data.iskey" label="true">是</el-radio>
-                        <el-radio v-model="viewEdit.data.iskey" label="false">否</el-radio>
+                        <el-radio v-model="viewEdit.data.isKey" label="true">是</el-radio>
+                        <el-radio v-model="viewEdit.data.isKey" label="false">否</el-radio>
                     </template>
                 </el-form-item> 
                 <el-form-item label="自增序列：" >
@@ -193,49 +193,45 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/libs/axios";
+import api from "@/api/data-model/data";
+import { Message } from 'element-ui';
 export default {
   name: "viewDataObj",
   components: {},
   data() {
     return {
-      //页面类型
-      viewType: false,
+        resId:'',
       //页面表格
       viewTable: {
         //dom元素id
         domId: "",
         //样式表类名
         className: "",
-        page: {
-          //当前页码
-          p: 1,
-          //数据总数量
-          count: 0,
-          //每页包含数据量
-          size: 15
-        },
         //数据
         data: []
       },
       //数据新增功能
       viewAdd: {
         data: {
-            list1:[],
-            list2:[]
+            
         },
         show: false
       },
       //数据修改功能
       viewEdit: {
         index: "",
-        data: "",
+        data: {
+            
+        },
         show: false
       },
       //数据删除功能
       viewDelet: {
         show: false,
-        item: {},
+        data: {
+            
+        },
         index: ""
       },
       plugs: {
@@ -268,51 +264,25 @@ export default {
           { label: "身份证", value: "身份证" }
         ],
         select3:[
-          { label: "PC56-7", value: "PC56-7" },
-          { label: "AS56-2", value: "AS56-2" },
-          { label: "DS56-3", value: "DS56-3" },
-          { label: "SD56-1", value: "SD56-1" },
-          { label: "PZ56-2", value: "PZ56-2" },
-          { label: "PC56-4", value: "PC56-4" }
+
         ]
       }
     };
   },
   created() {
-    this.viewTable.data = this._getViewTableData();
+       this.resId = this.$route.path.split("/")[3];
+        this.handleSearch();  
+     
   },
   methods: {
-    _getViewTableData() {
-      return [
-        {
-          id: "1",
-          columnName: "model",
-          jdbcType: "vchar",
-          length: "50",
-          name: "机型",
-          description: "出厂型号",
-          type: "字典",
-          disRes: "pc56-7",
-          rule: "文本说明",
-          isNull:"true",
-          iskey:"true",
-          isIncrement:"true"
-        },
-        {
-          id: "2",
-          columnName: "key",
-          jdbcType: "int",
-          length: "10",
-          name: "启动",
-          description: "启动装置",
-          type: "文本",
-          disRes: "pc56-7",
-          rule: "文本说明",
-          isNull:"false",
-          iskey:"false",
-          isIncrement:"false"
-        }
-      ];
+    //获取表格数据
+    handleSearch(){
+        api.getDataObjectAttrsList({resId:this.resId}).then(res => {
+          this.viewTable.data = res.data.list})
+        .catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
     //表格操作
     /**
@@ -324,6 +294,7 @@ export default {
     handleEdit(item, index) {
       console.log("edit", item, index);
       this.viewEdit.data = Object.assign({}, item);
+      this.viewEdit.data.resId = this.resId;
       this.viewEdit.index = index;
       this.viewEdit.show = true;
     },
@@ -332,8 +303,18 @@ export default {
      * @description 修改单项
      */
     editSingle() {
-      this.$set(this.viewTable.data, this.viewEdit.index, this.viewEdit.data);
-      this.viewEdit.show = false;
+      api.editDataObjectAttr(this.viewEdit.data)
+      .then(res => {
+          if(res.success = true){
+             Message.success("修改成功");
+             this.handleSearch();
+            this.viewEdit.show = false;
+          }
+        })
+      .catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
     /**
      * @function () handleDelet(item)
@@ -343,6 +324,7 @@ export default {
     handleDelet(item, index) {
       console.log("delet", item);
       this.viewDelet.data = item;
+      this.viewDelet.data.resId = this.resId;
       this.viewDelet.index = index;
       this.viewDelet.show = true;
     },
@@ -351,8 +333,18 @@ export default {
      * @description 删除单项
      */
     deletSingle() {
-      this.viewTable.data.splice(this.viewDelet.index, 1);
-      this.viewDelet.show = false;
+       api.deleteDataObjectAttr({
+            id: this.viewDelet.data.id
+        }).then(res => {
+            if(res.success==true){
+                Message.success("删除成功");
+                this.handleSearch();
+                this.viewDelet.show = false;
+            }
+        }).catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
 
     /**
@@ -361,7 +353,6 @@ export default {
      * @param {Object} item 表格一行数据
      */
     handleAdd(item) {
-      console.log("添加新成员");
       this.viewAdd.show = true;
     },
     /**
@@ -370,11 +361,26 @@ export default {
      */
     addSingle() {
       var o = Object.assign({}, this.viewAdd.data);
-      this.viewTable.data.push(o);
-      for (var i in this.viewAdd.data) {
-        this.viewAdd.data[i] = "";
-      }
-      this.viewAdd.show = false;
+      o.resId = this.resId;
+      var list = [];
+      list[0] = o;
+       api.addDataObjectAttr({list:list}).then(res => {
+          console.log("添加",res)
+           if(res.success==true){
+                Message.success("添加成功");
+                this.handleSearch();
+                //清除新建窗口信息
+                for (var i in this.viewAdd.data) {
+                    this.viewAdd.data[i] = "";
+                }
+                this.viewAdd.show = false;
+            }else{
+                Message.error('添加失败。')
+            }
+      }).catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     }
   } 
 };

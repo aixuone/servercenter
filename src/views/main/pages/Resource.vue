@@ -10,8 +10,8 @@
             </el-form-item>
             <el-form-item label="是否字典">
                 <el-select v-model="viewSearch.data.isDic" placeholder="请选择">
-                    <el-option label="是" value="是"></el-option>
-                    <el-option label="否" value="否"></el-option>
+                    <el-option label="是" value="true"></el-option>
+                    <el-option label="否" value="false"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="搜索对象">
@@ -128,6 +128,7 @@
 <script>
 import axios from "@/libs/axios";
 import api from "@/api/data-model/data";
+import { Message } from 'element-ui';
 import selectObjAttr from "./../components/plug_select_objAttr";
 export default {
   name: "Resource",
@@ -169,8 +170,6 @@ export default {
       //数据新增功能
       viewAdd: {
         data: {
-          list1: [],
-          list2: []
         },
         show: false
       },
@@ -189,43 +188,19 @@ export default {
     };
   },
   created() {
-    //   获取表格数据
-    // this.viewTable.data = this.getViewTableData(
-    //   this.ajax.Search.action,
-    //   this.ajax.Search.method,
-    //   this.ajax.Search.params
-    // );
-    this.viewTable.data = this._getViewTableData();
+     api.getDataObjectsList({
+        "type": this.viewSearch.data.type,
+        "isDic": this.viewSearch.data.isDic,
+        "name": this.viewSearch.data.name,
+        "pageInfo": this.viewTable.pageInfo
+      }).then(res => {
+          this.viewTable.data = res.data.list})
+        .catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
   },
   methods: {
-    _getViewTableData() {
-      return [
-        {
-          id: "1",
-          name: "车辆",
-          type: "对象",
-          defined: "carNumber",
-          isDic: "true",
-          description: "文本说明"
-        },
-        {
-          id: "2",
-          name: "挖掘机工人",
-          type: "数据集",
-          defined: "worker",
-          isDic: "false",
-          description: "文本说明"
-        },
-        {
-          id: "3",
-          name: "TYBOX",
-          type: "数据集",
-          defined: "boxNumber",
-          isDic: "false",
-          description: "文本说明"
-        }
-      ];
-    },
     //表格操作
     /**
      * @function () handleEdit(item)
@@ -244,8 +219,18 @@ export default {
      * @description 修改单项
      */
     editSingle() {
-      this.$set(this.viewTable.data, this.viewEdit.index, this.viewEdit.data);
-      this.viewEdit.show = false;
+      api.editDataObject(this.viewEdit.data)
+      .then(res => {
+          if(res.success = true){
+             Message.success("修改成功");
+             this.handleSearch();
+            this.viewEdit.show = false;
+          }
+        })
+      .catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
     /**
      * @function () handleDelet(item)
@@ -263,8 +248,18 @@ export default {
      * @description 删除单项
      */
     deletSingle() {
-      this.viewTable.data.splice(this.viewDelet.index, 1);
-      this.viewDelet.show = false;
+        api.deleteDataObject({
+            id: this.viewDelet.item.id
+        }).then(res => {
+            if(res.success==true){
+                Message.success("删除成功");
+                this.handleSearch();
+                this.viewDelet.show = false;
+            }
+        }).catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
 
     /**
@@ -273,7 +268,6 @@ export default {
      * @param {Object} item 表格一行数据
      */
     handleAdd(item) {
-      console.log("添加新成员");
       this.viewAdd.show = true;
     },
     /**
@@ -282,21 +276,39 @@ export default {
      */
     addSingle() {
       var o = Object.assign({}, this.viewAdd.data);
-      this.viewTable.data.push(o);
-      for (var i in this.viewAdd.data) {
-        this.viewAdd.data[i] = "";
-      }
-      this.viewAdd.show = false;
+      api.addDataObject(this.viewAdd.data).then(res => {
+          console.log("添加",res)
+           if(res.success==true){
+                Message.success("添加成功");
+                this.handleSearch();
+                //清除新建窗口信息
+                for (var i in this.viewAdd.data) {
+                    this.viewAdd.data[i] = "";
+                }
+                this.viewAdd.show = false;
+            }else{
+                Message.error('添加失败。')
+            }
+      }).catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
+      
     },
     // 搜索 得到表格数据
     handleSearch() {
-      console.log("搜索");
-      this.viewTable.data = api.getDataObjectsList({
-        type: this.viewSearch.type,
-        isDic: this.viewSearch.isDic,
-        name: this.viewSearch.name,
-        pageInfo: this.viewTable.pageInfo
-      });
+      console.log(this.viewSearch.data.type,this.viewSearch.data.isDic,this.viewSearch.data.name);
+      api.getDataObjectsList({
+        "type": this.viewSearch.data.type,
+        "isDic": this.viewSearch.data.isDic,
+        "name": this.viewSearch.data.name,
+        "pageInfo": this.viewTable.pageInfo
+      }).then(res =>{
+           this.viewTable.data = res.data.list
+      }).catch(error => {
+            console.log(error);
+            Message.error(error)
+        });
     },
     // 打开属性列表界面
     handleAttr(item, index) {

@@ -18,7 +18,7 @@ export default new Router({
     {
         path: "/",
         name: "index",
-        redirect: "/home",
+        redirect: "/resource",
         component: Main,
         meta: {
           title: "首页",

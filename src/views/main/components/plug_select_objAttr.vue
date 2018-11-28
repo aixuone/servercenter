@@ -47,66 +47,19 @@
         },
         created() {
             // 获取浏览对象列表
-            this.objList = [{
-                id: "1",
-                name: "车辆",
-                type: "对象",
-                defined: "carNumber",
-                isDic: "true",
-                description: "文本说明"
-                },
-                {
-                id: "2",
-                name: "挖掘机工人",
-                type: "数据集",
-                defined: "worker",
-                isDic: "false",
-                description: "文本说明"
-                },
-                {
-                id: "3",
-                name: "TYBOX",
-                type: "数据集",
-                defined: "boxNumber",
-                isDic: "false",
-                description: "文本说明"
-            }];
-            this.attrList = [{
-               resId:'1',
-               id:'0',
-               jdbcType:'vchar', 
-               length:'10',
-               name:'机型',
-               description:'出厂型号',
-               type:'字典'
-                },
-                {
-                resId:'1',
-                id:'1',
-                jdbcType:'vchar', 
-                length:'10',
-                name:'机型1',
-                description:'出厂型号3',
-                type:'字典'
-                },{
-                resId:'1',
-                id:'2',
-                jdbcType:'vchar', 
-                length:'10',
-                name:'机型2',
-                description:'出厂型号1',
-                type:'字典'
-                },{
-                resId:'1',
-                id:'3',
-                jdbcType:'vchar', 
-                length:'10',
-                name:'机型3',
-                description:'出厂型号2',
-                type:'字典'
-            }];
-            this.objList = api.getDataObjectsList({
-                "type":"对象"
+            this.objList = [];
+            //属性列表
+            this.attrList = [];
+            api.getDataObjectsList({
+                "type": "对象",
+                "isDic": "",
+                "name": "",
+                "pageInfo":""
+            }).then(res => {
+                this.objList = res.data.list})
+            .catch(error => {
+                    console.log(error);
+                    Message.error(error)
             });
         },
         mounted () {
@@ -117,80 +70,9 @@
             //根据 所选对象 获取对应属性列表
             checkedObj(v){
                 if(!this.objAttr[v]){
-                    // this.objAttr[v] = api.getDataObjectAttrsList({
-                    //     resId : v
-                    // });
-                    if (v==1) {
-                        this.objAttr[v] = [{
-                            resId:'1',
-                            id:'0',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型',
-                            description:'出厂型号',
-                            type:'字典'
-                            },
-                            {
-                            resId:'1',
-                            id:'1',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型1',
-                            description:'出厂型号3',
-                            type:'字典'
-                            },{
-                            resId:'1',
-                            id:'2',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型2',
-                            description:'出厂型号1',
-                            type:'字典'
-                            },{
-                            resId:'1',
-                            id:'3',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型3',
-                            description:'出厂型号2',
-                            type:'字典'
-                        }];                        
-                    }else{
-                        this.objAttr[v] = [{
-                            resId:'2',
-                            id:'0',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型',
-                            description:'出厂型号',
-                            type:'字典'
-                            },
-                            {
-                            resId:'2',
-                            id:'1',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型1',
-                            description:'出厂型号3',
-                            type:'字典'
-                            },{
-                            resId:'2',
-                            id:'2',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型2',
-                            description:'出厂型号1',
-                            type:'字典'
-                            },{
-                            resId:'2',
-                            id:'3',
-                            jdbcType:'vchar', 
-                            length:'10',
-                            name:'机型3',
-                            description:'出厂型号2',
-                            type:'字典'
-                        }];
-                    }
+                    this.objAttr[v] = api.getDataObjectAttrsList({
+                        resId : v
+                    });
                 }
                 this.attrList = this.objAttr[v];
             }

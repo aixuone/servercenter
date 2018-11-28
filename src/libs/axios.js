@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 // import store from "../store";
-const api_base_url = "/";
+const api_base_url = "http://192.168.18.188:19081";
+axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 const instance = axios.create({
     baseURL: api_base_url,
     //跨站访问
-    withCredentials: true
-  });
+    // withCredentials: true
+});
   
   instance.interceptors.request.use(
     config => {
@@ -23,19 +24,22 @@ const instance = axios.create({
   
   instance.interceptors.response.use(
     res => {
+        console.log("res",res);
       // console.log(res);
     //   if (res.data !== "" && res.data.code !== 200) {
-        if(res.data !==""){
-        Message.error(res.data.message);
-        return Promise.reject(res.data.message);
-      }
-      return res;
+        if(res.data.success !== true){
+            console.log("res.data.success",res);
+            Message.error("传输错误，"+res.data.code);
+            return Promise.reject(res);
+        }
+        return res;
     },
     error => {
+        console.log("error",error);
       if (!error.success) {
         Message.error("网络错误");
       } else if (error.response.data.code >= 500) {
-        Message.error("服务内部错误");
+        Message.error("服务器内部错误");
       }
       // 对响应错误做点什么
       return Promise.reject(error);
