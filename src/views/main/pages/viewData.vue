@@ -104,6 +104,18 @@
       </el-table>
 
     </div>
+    <!-- 分页 -->
+    <el-pagination
+      class="pageArea"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="viewTable.pageInfo.page"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="viewTable.pageInfo.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="viewTable.pageInfo.total"
+    >
+    </el-pagination>
   </div>
 </template>
 
@@ -133,8 +145,8 @@ export default {
           //数据总数量
           count: 0,
           //每页包含数据量
-          pageSize: 15,
-          total: ""
+          pageSize: 100,
+          total: 10
         },
         //数据
         data: []
@@ -182,10 +194,11 @@ export default {
         .viewData({
           condition: this.viewSearch.data,
           dataObjectId: this.resId,
-          pageInfo: { page: 0, pageSize: 0 }
+          pageInfo: this.viewTable.pageInfo
         })
         .then(res => {
           this.viewTable.data = res.data.rtnData;
+           this.viewTable.pageInfo.total = res.data.pageInfo.total;
         })
         .catch(error => {
           console.log(error);

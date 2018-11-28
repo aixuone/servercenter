@@ -484,8 +484,9 @@ export default {
      */
     addSingle() {
       console.log(this._DatasetAttrs);
-      if (this._DatasetAttrs && this._DatasetAttrs.length > 0) {
         var o = Object.assign({}, this.viewAdd.data);
+        console.log(o.type);        
+      if (o.type=="对象"||(o.type=="数据集"&&this._DatasetAttrs && this._DatasetAttrs.length > 0)) {
         api
           .addDataObject(o)
           .then(res => {

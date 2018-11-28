@@ -322,15 +322,15 @@
           </el-select>
         </el-form-item>
         <el-form-item label="引用字典对象：">
-          <el-select
+         <el-select
             v-model="viewEdit.data.disRes"
             placeholder="请选择"
           >
             <el-option
               v-for="item in plugs.select3"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             >
             </el-option>
           </el-select>
