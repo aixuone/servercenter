@@ -41,7 +41,7 @@ export default new Router({
               title: "demo",
               hideInMenu: false
             },
-            component: () => import('@/views/main/pages/DataCenterUser.vue')
+            component: () => import('@/views/main/pages/dictBindAttr.vue')
           },
           {
             path: "/createcode",

@@ -27,8 +27,8 @@
         <el-form-item label="保存路径">
           <el-input v-model="view.data.diskPath" placeholder="保存路径"></el-input>
         </el-form-item>
-        <el-form-item label="选择文件类型" prop="files">
-          <el-select v-model="view.data.files" placeholder="请选择">
+        <el-form-item label="选择文件类型"  prop="files">
+          <el-select v-model="view.data.files" multiple placeholder="请选择">
             <el-option label="Vue" value=".vue"></el-option>
             <el-option label="Controller" value="Controller.java"></el-option>
             <el-option label="impl" value="ServiceImpl.java"></el-option>
@@ -67,7 +67,7 @@
             tableNames: "",
             tableAnnotation: "",
             diskPath: "",
-            files: ""
+            files: []
           },
           list:[],
           show: false

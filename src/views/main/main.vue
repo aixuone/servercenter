@@ -1,6 +1,6 @@
 <template>
   <el-container class="wrapper">
-    <el-aside width="250px">
+    <el-aside width="150px">
       <el-menu
         :default-active="activeIndex"
         router
