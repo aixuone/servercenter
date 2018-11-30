@@ -68,6 +68,7 @@ export default {
      * @description 修改数据对象属性
      */
     editDataObjectAttr: params => {
+        
         return axios.post('/data/object/attribute/update', params).then(res => {return res.data});
     },
     viewData: params =>{

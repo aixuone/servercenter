@@ -120,17 +120,17 @@
     >
       <el-form
         :model="viewEdit.data"
-        :rules="rules" ref="viewEdit.data"
         label-position="right"
         label-width="120px"
+        ref="viewEdit.data"
       >
-        <el-form-item label="字段名：" prop="columnName">
+        <el-form-item label="字段名：" >
           <el-input
             v-model="viewEdit.data.columnName"
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="数据类型："  prop="jdbcType">
+        <el-form-item label="数据类型：" >
           <el-select
             v-model="viewEdit.data.jdbcType"
             placeholder="请选择"
@@ -144,26 +144,26 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="数据长度："   prop="length">
+        <el-form-item label="数据长度：">
           <el-input
             v-model="viewEdit.data.length"
             placeholder="请输入数据长度"
           ></el-input>
 
         </el-form-item>
-        <el-form-item label="名称：" prop="name">
+        <el-form-item label="名称：">
           <el-input
             v-model="viewEdit.data.name"
             placeholder="请输入名称"
           ></el-input>
         </el-form-item>
-        <el-form-item label="说明：" prop="description">
+        <el-form-item label="说明：">
           <el-input
             v-model="viewEdit.data.description"
             placeholder="请输入说明"
           ></el-input>
         </el-form-item>
-        <el-form-item label="类型：" prop="type">
+        <el-form-item label="类型：">
           <el-select
             v-model="viewEdit.data.type"
             placeholder="请选择"
@@ -177,7 +177,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：" >
           <el-select
             v-model="viewEdit.data.disRes"
             placeholder="请选择"
@@ -191,7 +191,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="规则：" prop="rule">
+        <el-form-item label="规则：">
           <el-input
             v-model="viewEdit.data.rule"
             placeholder="请输入规则"
@@ -345,34 +345,34 @@ export default {
         ],
         select3: []
       },
-            //新增的表单的验证
-        rules: {
-          columnName: [
-              { validator: columnNames, trigger: 'blur' }
-          ],
-          jdbcType: [
-              { required: true, message: '请选择数据类型', trigger: 'change'}
-          ],
-          length: [
-             { validator: lengths, trigger: 'blur' }
-          ],
-          name: [
-            { required: true, message: '请输入名称',trigger: 'blur' }
-          ],
-          description: [
-            {required: true, message: '请输入说明', trigger: 'blur' }
-          ],
-          type: [
-            {required: true, message: '请选择类型', trigger: 'change' }
-          ],
-           disRes: [
-            {required: true, message: '请选择引用的字典对象', trigger: 'change' }
-          ],
-           rule: [
-            {required: true, message: '请输入规则', trigger: 'blur' }
-          ]
+        //     //新增的表单的验证
+        // rules: {
+        //   columnName: [
+        //       { validator: columnNames, trigger: 'blur' }
+        //   ],
+        //   jdbcType: [
+        //       { required: true, message: '请选择数据类型', trigger: 'change'}
+        //   ],
+        //   length: [
+        //      { validator: lengths, trigger: 'blur' }
+        //   ],
+        //   name: [
+        //     { required: true, message: '请输入名称',trigger: 'blur' }
+        //   ],
+        //   description: [
+        //     {required: true, message: '请输入说明', trigger: 'blur' }
+        //   ],
+        //   type: [
+        //     {required: true, message: '请选择类型', trigger: 'change' }
+        //   ],
+        //    disRes: [
+        //     {required: true, message: '请选择引用的字典对象', trigger: 'change' }
+        //   ],
+        //    rule: [
+        //     {required: true, message: '请输入规则', trigger: 'blur' }
+        //   ]
 
-        },
+        // },
         //添加数据集 数据集属性列表
       _DatasetAttrs:[]
     };
@@ -458,10 +458,8 @@ export default {
     editSingle() {
        this.diff(this.viewEdit.data,this.viewEdit.old);
         if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
-          alert("修改前和修改后的数据一致")
+             Message.warning("修改前和修改后的数据一致")
         }else{
-                 this.$refs['viewEdit.data'].validate((valid) => {
-            if (valid) {
                  api
                 .editDataObjectAttr(this.viewEdit.data)
                 .then(res => {
@@ -475,11 +473,6 @@ export default {
                   console.log(error);
                   Message.error(error);
                 });
-            } else {
-            console.log('error submit!!');
-            return false;
-            }
-         });
         }
     },
 

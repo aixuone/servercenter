@@ -147,7 +147,7 @@
             placeholder="请输入名称"
           ></el-input>
         </el-form-item>
-        <el-form-item label="说明：" prop="description">
+        <el-form-item label="说明：">
           <el-input
             v-model="viewAdd.data.description"
             placeholder="请输入说明"
@@ -167,7 +167,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：">
           <el-select
             v-model="viewAdd.data.disRes"
             placeholder="请选择"
@@ -181,13 +181,13 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="规则：" prop="rule">
+        <el-form-item label="规则：" >
           <el-input
             v-model="viewAdd.data.rule"
             placeholder="请输入规则"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull">
+        <el-form-item label="是否为空：" >
           <template>
             <el-radio
               v-model="viewAdd.data.isNull"
@@ -199,7 +199,7 @@
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="索引类型：" prop="indexType">
+        <el-form-item label="索引类型：">
           <el-select
             v-model="viewAdd.data.indexType"
             placeholder="请选择"
@@ -218,7 +218,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否主键：" prop="isKey">
+        <el-form-item label="是否主键：" >
           <template>
             <el-radio
               v-model="viewAdd.data.isKey"
@@ -230,7 +230,7 @@
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement">
+        <el-form-item label="自增序列：" >
           <template>
             <el-radio
               v-model="viewAdd.data.isIncrement"
@@ -266,17 +266,16 @@
     >
       <el-form
         :model="viewEdit.data"
-        :rules="rules" ref="viewEdit.data"
         label-position="right"
         label-width="120px"
       >
-        <el-form-item label="字段名：" prop="columnName">
+        <el-form-item label="字段名：" >
           <el-input
             v-model="viewEdit.data.columnName"
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="数据类型：" prop="jdbcType">
+        <el-form-item label="数据类型：" >
           <el-select
             v-model="viewEdit.data.jdbcType"
             placeholder="请选择"
@@ -290,26 +289,26 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="数据长度：" prop="length">
+        <el-form-item label="数据长度：" >
           <el-input
             v-model="viewEdit.data.length"
             placeholder="请输入数据长度"
           ></el-input>
 
         </el-form-item>
-        <el-form-item label="名称：" prop="name">
+        <el-form-item label="名称：" >
           <el-input
             v-model="viewEdit.data.name"
             placeholder="请输入名称"
           ></el-input>
         </el-form-item>
-        <el-form-item label="说明：" prop="description">
+        <el-form-item label="说明：">
           <el-input
             v-model="viewEdit.data.description"
             placeholder="请输入说明"
           ></el-input>
         </el-form-item>
-        <el-form-item label="类型：" prop="type">
+        <el-form-item label="类型：" >
           <el-select
             v-model="viewEdit.data.type"
             placeholder="请选择"
@@ -323,7 +322,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：" >
          <el-select
             v-model="viewEdit.data.disRes"
             placeholder="请选择"
@@ -337,13 +336,13 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="规则：" prop="rule">
+        <el-form-item label="规则：" >
           <el-input
             v-model="viewEdit.data.rule"
             placeholder="请输入规则"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull">
+        <el-form-item label="是否为空：" >
           <template>
             <el-radio
               v-model="viewEdit.data.isNull"
@@ -355,7 +354,7 @@
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="索引类型：" prop="indexType">
+        <el-form-item label="索引类型：" >
           <el-select
             v-model="viewEdit.data.indexType"
             placeholder="请选择"
@@ -374,7 +373,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否主键：" prop="isKey">
+        <el-form-item label="是否主键：">
           <template>
             <el-radio
               v-model="viewEdit.data.isKey"
@@ -386,7 +385,7 @@
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement">
+        <el-form-item label="自增序列：" >
           <template>
             <el-radio
               v-model="viewEdit.data.isIncrement"
@@ -456,7 +455,7 @@ export default {
             }
             if (value) {
                 setTimeout(() => {
-                     var reg =  /^[a-zA-Z]\w{2,19}$/;
+                     var reg =  /^[a-zA-Z]\w{0,19}$/;
                     if (!reg.test(value)) {
                         callback(new Error('有效的字段名为第一个必须是字母，后面可以是字母、数字、下划线，总长度为5-20！'));
                     } else {
@@ -545,6 +544,46 @@ export default {
             { label: "pc", value: "pc" }
         ]
       },
+        //     //新增的表单的验证
+        // rules: {
+        //   columnName: [
+        //      { validator: columnNames, trigger: 'blur' }
+        //   ],
+        //   jdbcType: [
+        //     { required: true, message: '请选择数据类型', trigger: 'change'}
+        //   ],
+        //   length: [
+        //     { validator: lengths, trigger: 'blur' }
+        //   ],
+        //   name: [
+        //     { required: true, message: '请输入名称',trigger: 'blur' }
+        //   ],
+        //   description: [
+        //     {required: true, message: '请输入说明', trigger: 'blur' }
+        //   ],
+        //   type: [
+        //     {required: true, message: '请选择类型', trigger: 'change' }
+        //   ],
+        //    disRes: [
+        //     {required: true, message: '请选择引用的字典对象', trigger: 'change' }
+        //   ],
+        //    rule: [
+        //     {required: true, message: '请输入规则', trigger: 'blur' }
+        //   ],
+        //    isNull: [
+        //     {required: true, message: '请选择是否为空', trigger: 'change' }
+        //   ],
+        //   indexType :[
+        //     {required: true, message: '请选择索引类型', trigger: 'change' }
+        //   ],
+
+        //   isKey: [
+        //     {required: true, message: '请选择是否为主键', trigger: 'change' }
+        //   ],
+        //   isIncrement: [
+        //     {required: true, message: '请选择自增序列', trigger: 'blur' }
+        //   ]
+        // }
             //新增的表单的验证
         rules: {
           columnName: [
@@ -559,32 +598,14 @@ export default {
           name: [
             { required: true, message: '请输入名称',trigger: 'blur' }
           ],
-          description: [
-            {required: true, message: '请输入说明', trigger: 'blur' }
-          ],
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
-          ],
-           disRes: [
-            {required: true, message: '请选择引用的字典对象', trigger: 'change' }
-          ],
-           rule: [
-            {required: true, message: '请输入规则', trigger: 'blur' }
-          ],
-           isNull: [
-            {required: true, message: '请选择是否为空', trigger: 'change' }
-          ],
-          indexType :[
-            {required: true, message: '请选择索引类型', trigger: 'change' }
-          ],
-
-          isKey: [
-            {required: true, message: '请选择是否为主键', trigger: 'change' }
-          ],
-          isIncrement: [
-            {required: true, message: '请选择自增序列', trigger: 'blur' }
           ]
         }
+
+
+
+
     };
   },
   created() {
@@ -642,6 +663,7 @@ export default {
     handleEdit(item, index) {
       console.log("edit", item, index);
       this.viewEdit.data = Object.assign({}, item);
+      this.viewEdit.old = Object.assign({}, item);
       this.viewEdit.data.resId = this.resId;
       this.viewEdit.index = index;
       this.viewEdit.show = true;
@@ -691,10 +713,8 @@ export default {
      */
     editSingle() {
            if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
-              alert("修改前和修改后的数据一致")
-        }else{
-               this.$refs['viewEdit.data'].validate((valid) => {
-            if (valid) {
+              Message.warning("修改前和修改后的数据一致")
+           }else{
               // if(this.viewEdit.data!= this.viewTable.data[index]){
               //   this.booleans=false;
                    api
@@ -712,11 +732,8 @@ export default {
                 });
               // }
              
-            } else {
-            console.log('error submit!!');
-            return false;
-            }
-        });
+        
+       
       }
           
 

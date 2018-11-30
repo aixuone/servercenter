@@ -155,7 +155,7 @@
     >
       <el-form
         :model="viewAdd.data"
-        :rules="rules" 
+        :rules="addrules" 
         ref="viewAdd.data"
         label-position="right"
         label-width="120px"
@@ -168,14 +168,15 @@
         </el-form-item>
         <el-form-item label="类型：" prop='type'>
           <template>
-            <el-radio 
-              v-model="viewAdd.data.type"
-              label="对象"
-            >对象</el-radio>
-            <el-radio
-              v-model="viewAdd.data.type"
-              label="数据集"
-            >数据集</el-radio>
+            <el-radio-group v-model="viewAdd.data.type">
+              <el-radio 
+                label="对象"
+              >对象</el-radio>
+              <el-radio
+                label="数据集"
+              >数据集</el-radio>
+            </el-radio-group>
+
           </template>
         </el-form-item>
         <el-form-item label="数据定义：" prop='defined' >
@@ -188,17 +189,14 @@
         </el-form-item>
         <el-form-item label="是否字典：" prop='isDic'>
           <template>
-            <el-radio
-              v-model="viewAdd.data.isDic"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewAdd.data.isDic"
-              label="false"
-            >否</el-radio>
+            <el-radio-group v-model="viewAdd.data.isDic">
+              <el-radio label="true">是
+              </el-radio>
+              <el-radio label="false">否</el-radio>
+            </el-radio-group>
           </template>
         </el-form-item>
-        <el-form-item label="说明："  prop='description'>
+        <el-form-item label="说明："  >
           <el-input
             v-model="viewAdd.data.description"
             placeholder="请输入字段名"
@@ -234,7 +232,7 @@
     >
       <el-form
         :model="viewEdit.data"
-        :rules="rules" ref="viewEdit.data"
+        :rules="reviserules" ref="viewEdit.data"
         label-position="right"
         label-width="120px"
       >
@@ -244,22 +242,21 @@
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item
-          label="类型："
-          v-show="false"
-          prop="type"
-        >
+
+         <el-form-item label="类型： " v-show="false" prop='type'>
           <template>
-            <el-radio
-              v-model="viewEdit.data.type"
-              label="对象"
-            >对象</el-radio>
-            <el-radio
-              v-model="viewEdit.data.type"
-              label="数据集"
-            >数据集</el-radio>
+            <el-radio-group  v-model="viewEdit.data.type">
+              <el-radio 
+                label="对象"
+              >对象</el-radio>
+              <el-radio
+                label="数据集"
+              >数据集</el-radio>
+            </el-radio-group>
+
           </template>
         </el-form-item>
+
         <el-form-item label="数据定义：" prop="defined">
           <el-input
             v-model="viewEdit.data.defined"
@@ -268,14 +265,15 @@
         </el-form-item>
         <el-form-item label="是否字典：" prop="isDic">
           <template>
-            <el-radio
-              v-model="viewEdit.data.isDic"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewEdit.data.isDic"
-              label="false"
-            >否</el-radio>
+            <el-radio-group v-model="viewEdit.data.isDic">
+              <el-radio
+                label="true"
+              >是</el-radio>
+              <el-radio
+                label="false"
+              >否</el-radio>
+            </el-radio-group>
+
           </template>
         </el-form-item>
         <el-form-item label="说明：" prop="description">
@@ -388,8 +386,8 @@ export default {
         item: {},
         index: ""
       },
-       //表单的验证
-        rules: {
+       //新增数据对象的表单的验证
+        addrules: {
           name: [
             { required: true, message: '请输入字段名', trigger: 'blur' }
           ],
@@ -401,11 +399,33 @@ export default {
           ],
           isDic: [
             { required: true, message: '请选择是否是字典',trigger: 'change' }
+          ]
+         
+        },
+        reviserules:{
+           name: [
+            { required: true, message: '请输入字段名', trigger: 'blur' }
           ],
-          description: [
-            {required: true,  message: '请输入说明', trigger: 'blur' }
+          type: [
+            {required: true,  message: '请选择类型', trigger: 'change'}
+          ],
+          defined: [
+            {required: true,  message: '输入数据定义', trigger: 'blur'}
+          ],
+          isDic: [
+            { required: true, message: '请选择是否是字典',trigger: 'change' }
+          ],
+           description: [
+            { required: true, message: '添加对表的描述',trigger: 'blur' }
           ]
         },
+
+
+
+
+        
+
+
       //添加数据集 数据集属性列表
       _DatasetAttrs: []
     };
@@ -590,6 +610,7 @@ export default {
                 api
                   .addDataObject(o)
                   .then(res => {
+                    console.log(88,res)
                     if (res.success == true) {
                       Message.success("添加成功");
                       if (o.type == "对象") {
