@@ -4,6 +4,11 @@ $--color-danger :#fc5e1f;
 $--color-menuBar :#515a6e;
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
+// 改变表格宽度
+.viewTableClass{
+    width: 80%;
+    margin: 0 auto;
+}
 
 @import "~element-ui/packages/theme-chalk/src/index";
 

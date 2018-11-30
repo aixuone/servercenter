@@ -54,7 +54,7 @@
           width="100"
         ></el-table-column>
         <el-table-column
-          prop="disRes"
+          prop="dicRes"
           label="引用字典对象"
         ></el-table-column>
         <el-table-column
@@ -177,16 +177,16 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：" prop="dicRes">
           <el-select
-            v-model="viewEdit.data.disRes"
+            v-model="viewEdit.data.dicRes"
             placeholder="请选择"
           >
             <el-option
               v-for="item in plugs.select3"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name"
             >
             </el-option>
           </el-select>
@@ -365,7 +365,7 @@ export default {
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
           ],
-           disRes: [
+           dicRes: [
             {required: true, message: '请选择引用的字典对象', trigger: 'change' }
           ],
            rule: [
@@ -380,8 +380,33 @@ export default {
   created() {
     this.resId = parseInt(this.$route.path.split("/")[3]);
     this.handleSearch();
+    this.getDics();
   },
   methods: {
+      //   获取字典列表
+    getDics() {
+      api
+        .getDataObjectsList({
+          type: "",
+          isDic: "true",
+          name: "",
+          pageInfo: {
+            page: 0,
+            pageSize: 0
+          }
+        })
+        .then(res => {
+          if (res.success) {
+            this.plugs.select3 = res.data.list;
+          } else {
+            Message.error("获取字典列表失败。");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          Message.error("网络错误。" + error);
+        });
+    },
     //获取表格数据
     handleSearch() {
       api

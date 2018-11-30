@@ -54,7 +54,7 @@
           width="100"
         ></el-table-column>
         <el-table-column
-          prop="disRes"
+          prop="dicRes"
           label="引用字典对象"
         ></el-table-column>
         <el-table-column
@@ -167,16 +167,16 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：" prop="dicRes">
           <el-select
-            v-model="viewAdd.data.disRes"
+            v-model="viewAdd.data.dicRes"
             placeholder="请选择"
           >
             <el-option
               v-for="item in plugs.select3"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             >
             </el-option>
           </el-select>
@@ -187,50 +187,39 @@
             placeholder="请输入规则"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull">
-          <template>
-            <el-radio
-              v-model="viewAdd.data.isNull"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewAdd.data.isNull"
-              label="false"
-            >否</el-radio>
-          </template>
-        </el-form-item>
+        
         <el-form-item label="索引类型：" prop="indexType">
           <el-select
             v-model="viewAdd.data.indexType"
             placeholder="请选择"
           >
             <el-option
-              label="主键索引"
-              value="主键索引"
+              label="--"
+              value="--"
             ></el-option>
             <el-option
-              label="唯一索引"
-              value="唯一索引"
+              label="主键"
+              value="主键"
             ></el-option>
             <el-option
-              label="聚集索引"
-              value="聚集索引"
+              label="索引"
+              value="索引"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否主键：" prop="isKey">
+        <el-form-item label="是否为空：" prop="isNull" v-show="viewAdd.data.indexType!='主键'">
           <template>
             <el-radio
-              v-model="viewAdd.data.isKey"
+              v-model="viewAdd.data.isNull"
               label="true"
             >是</el-radio>
             <el-radio
-              v-model="viewAdd.data.isKey"
+              v-model="viewAdd.data.isNull"
               label="false"
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement">
+        <el-form-item label="自增序列：" prop="isIncrement" v-show="viewAdd.data.indexType=='主键'">
           <template>
             <el-radio
               v-model="viewAdd.data.isIncrement"
@@ -323,16 +312,16 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="disRes">
+        <el-form-item label="引用字典对象：" prop="dicRes">
          <el-select
-            v-model="viewEdit.data.disRes"
+            v-model="viewEdit.data.dicRes"
             placeholder="请选择"
           >
             <el-option
               v-for="item in plugs.select3"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             >
             </el-option>
           </el-select>
@@ -343,50 +332,38 @@
             placeholder="请输入规则"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull">
-          <template>
-            <el-radio
-              v-model="viewEdit.data.isNull"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewEdit.data.isNull"
-              label="false"
-            >否</el-radio>
-          </template>
-        </el-form-item>
         <el-form-item label="索引类型：" prop="indexType">
           <el-select
             v-model="viewEdit.data.indexType"
             placeholder="请选择"
           >
             <el-option
-              label="主键索引"
-              value="主键索引"
+              label="--"
+              value="--"
             ></el-option>
             <el-option
-              label="唯一索引"
-              value="唯一索引"
+              label="主键"
+              value="主键"
             ></el-option>
             <el-option
-              label="聚集索引"
-              value="聚集索引"
+              label="索引"
+              value="索引"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否主键：" prop="isKey">
+        <el-form-item label="是否为空：" prop="isNull"  v-show="viewEdit.data.indexType!='主键'">
           <template>
             <el-radio
-              v-model="viewEdit.data.isKey"
+              v-model="viewEdit.data.isNull"
               label="true"
             >是</el-radio>
             <el-radio
-              v-model="viewEdit.data.isKey"
+              v-model="viewEdit.data.isNull"
               label="false"
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement">
+        <el-form-item label="自增序列：" prop="isIncrement"  v-show="viewEdit.data.indexType=='主键'">
           <template>
             <el-radio
               v-model="viewEdit.data.isIncrement"
@@ -438,6 +415,9 @@
       </div>
     </el-dialog>
     <!-- 对话框 结束 -->
+    <div style="width:100%;position:absolute;bottom:10px;left:0%;text-align:center;">
+        <dictBindAttr :resId="resId"></dictBindAttr>
+    </div>
   </div>
 </template>
 
@@ -445,9 +425,12 @@
 import axios from "@/libs/axios";
 import api from "@/api/data-model/data";
 import { Message } from "element-ui";
+import dictBindAttr from './dictBindAttr';
 export default {
   name: "viewDataObj",
-  components: {},
+  components: {
+      dictBindAttr
+  },
   data() {
         //字段名的验证
       var columnNames = (rule, value, callback) => {
@@ -497,13 +480,21 @@ export default {
       },
       //数据新增功能
       viewAdd: {
-        data: {},
+        data: {
+            isIncrement : 'false',
+            isNull : 'true',
+            indexType:'--'
+        },
         show: false
       },
       //数据修改功能
       viewEdit: {
         index: "",
-        data: {},
+        data: {
+            isIncrement : '',
+            isNull : '',
+            indexType:''
+        },
         show: false
       },
       //数据删除功能
@@ -542,7 +533,7 @@ export default {
           { label: "身份证", value: "身份证" }
         ],
         select3: [
-            { label: "pc", value: "pc" }
+            { label: "查询列表失败", value: "" }
         ]
       },
             //新增的表单的验证
@@ -565,7 +556,7 @@ export default {
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
           ],
-           disRes: [
+           dicRes: [
             {required: true, message: '请选择引用的字典对象', trigger: 'change' }
           ],
            rule: [
@@ -724,7 +715,7 @@ export default {
 
       
     },
- /**
+     /**
      * @function () editCancel()
      * @description 取消
      */
@@ -792,6 +783,15 @@ export default {
             if (valid) {
                   var o = Object.assign({}, this.viewAdd.data);
                   o.resId = this.resId;
+                  //奇怪的程序逻辑设计 start
+                    if (o.indexType=="主键") {
+                        o.isKey = 'true';
+                        o.isNull = 'false';
+                    }else{
+                        o.isKey = 'false';
+                        o.isIncrement = 'false';
+                    }
+                  //奇怪的程序逻辑设计 end
                   var list = [];
                   list[0] = o;
                   api
@@ -805,6 +805,8 @@ export default {
                         for (var i in this.viewAdd.data) {
                           this.viewAdd.data[i] = "";
                         }
+                        this.viewAdd.data.isIncrement = false;
+                        this.viewAdd.data.isNull = true;
                         this.viewAdd.show = false;
                       } else {
                         Message.error("添加失败。");

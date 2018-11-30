@@ -70,7 +70,19 @@ export default {
     editDataObjectAttr: params => {
         return axios.post('/data/object/attribute/update', params).then(res => {return res.data});
     },
+     /**
+     * @api viewData
+     * @description 查看数据
+     */
     viewData: params =>{
         return axios.post('/data/retrieve',params).then(res =>{ return res.data});
+    },
+     /**
+     * @api dictBind
+     * @description 绑定字典属性
+     */
+    dictBind: params =>{
+        return axios.post('/data/object/binding',params).then(res =>{return res.data});
     }
+
 };
