@@ -191,9 +191,16 @@ export default {
     //获取表格数据
     getTableData() {
       console.log("ser", this.viewSearch.data);
+      var arr = this.viewSearch.data.slice();
+      for (var index = arr.length-1; index>=0;--index) {
+          var element = arr[index];
+          if(element.key==""){
+            arr.splice(index,1);
+          }
+      }      
       api
         .viewData({
-          condition: this.viewSearch.data,
+          condition: arr,
           dataObjectId: this.resId,
           pageInfo: this.viewTable.pageInfo
         })
@@ -203,8 +210,19 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          Message.error(error);
+          Message.error(error.message);
         });
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.viewTable.pageInfo.page = 1;
+      this.viewTable.pageInfo.pageSize = val;
+      this.handleSearch();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.viewTable.pageInfo.page = val;
+      this.handleSearch();
     }
   }
 };

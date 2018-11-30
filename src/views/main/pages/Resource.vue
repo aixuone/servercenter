@@ -445,7 +445,7 @@ export default {
       })
       .catch(error => {
         console.log(error);
-        Message.error(error);
+        Message.error(error.data.message);
       });
   },
   methods: {
@@ -531,7 +531,7 @@ export default {
                })
                 .catch(error => {
                   console.log(error);
-                  Message.error(error);
+                  Message.error(error.data.message);
                 });
                         
             } else {
@@ -584,7 +584,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          Message.error(error);
+          Message.error(error.data.message);
         });
     },
 
@@ -632,7 +632,7 @@ export default {
                   })
                   .catch(error => {
                     console.log(error);
-                    Message.error(error);
+                    Message.error(error.data.message);
                   });
               } else {
                 Message.warning("创建数据集，数据集属性不能为空。");
@@ -676,7 +676,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          Message.error(error);
+          Message.error(error.data.message);
         });
     },
     // 打开属性列表界面
