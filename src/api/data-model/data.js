@@ -13,8 +13,13 @@ export default {
      * @description 查询数据对象列表
      */
     getDataObjectsList: params => {
-        console.log(params);
-        return axios.post('/data/object/list', params).then(res => {return res.data;});
+        console.log("参数",params);
+        return axios.post('/data/object/list', params)
+        .then(res => {
+            console.log("参数中返回的res",res)
+            console.log("参数中返回的data",res.data)
+            return res.data;
+        });
     },
     /**
      * @api addDataObject
