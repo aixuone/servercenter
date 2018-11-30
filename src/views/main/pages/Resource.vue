@@ -333,6 +333,7 @@ import axios from "@/libs/axios";
 import api from "@/api/data-model/data";
 import { Message } from "element-ui";
 import selectObjAttr from "./../components/plug_select_objAttr";
+
 export default {
   name: "Resource",
   components: { selectObjAttr },
@@ -690,7 +691,7 @@ export default {
       console.log("adddDatasetAttrs 接口", list);
 
       api
-        .addDataObjectAttr({ objectId: resId , list: list })
+        .addDataObjectAttr({ objectId: resId, list: list })
         .then(res => {
           console.log("添加属性", res);
           if (res.success == true) {

@@ -385,7 +385,10 @@ export default {
     //获取表格数据
     handleSearch() {
       api
-        .getDataObjectAttrsList({ resId: this.resId ,pageInfo:{page:0,pageSize:0}})
+        .getDataObjectAttrsList({
+          resId: this.resId,
+          pageInfo: { page: 0, pageSize: 0 }
+        })
         .then(res => {
           this.viewTable.data = res.data.list;
         })
@@ -534,16 +537,16 @@ export default {
     handleAdd(item) {
       this.viewAdd.show = true;
     },
-     // 创建数据集的同时添加属性  添加属性列表
+    // 创建数据集的同时添加属性  添加属性列表
     addSingle() {
-        var list = this._DatasetAttrs ;
-        if(list.length<=0){
-            return ;
-        }
-        console.log("adddDatasetAttrs 接口",list);
-        
+      var list = this._DatasetAttrs;
+      if (list.length <= 0) {
+        return;
+      }
+      console.log("adddDatasetAttrs 接口", list);
+
       api
-        .addDataObjectAttr({ objectId:this.resId,list: list })
+        .addDataObjectAttr({ objectId: this.resId, list: list })
         .then(res => {
           console.log("添加属性", res);
           if (res.success == true) {
@@ -555,14 +558,14 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
-          Message.error("添加数据集属性失败。"+error);
+          console.log("error",error.data.message);
+          Message.error("添加数据集属性失败。" + error.data.message);
         });
     },
     //获取selectObjAttr 回传值
-    _getDatasetAttrs(val){
-        console.log("_getDatasetAttrs",val);
-        this._DatasetAttrs = val;
+    _getDatasetAttrs(val) {
+      console.log("_getDatasetAttrs", val);
+      this._DatasetAttrs = val;
     }
   }
 };

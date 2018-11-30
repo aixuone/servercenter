@@ -5,6 +5,7 @@
       <div class="text-con">
         <h4>{{ code }}</h4>
         <h5>{{ desc }}</h5>
+        <h5>{{second}}秒后，回到主页</h5>
       </div>
     </div>
   </div>
@@ -19,6 +20,25 @@ export default {
     code: String,
     desc: String,
     src: String
+  },
+  data(){
+      return{
+          second:5
+      };
+  },
+  mounted(){
+      this.killTime();
+  },
+  methods:{
+      killTime(){
+          if (this.second>0) {
+              setTimeout(() => {
+                  this.killTime(--this.second);                  
+              }, 999);
+          }else{
+              this.$router.push({path:"/"});
+          }
+      }
   }
 };
 </script>

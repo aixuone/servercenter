@@ -87,11 +87,12 @@
         border
         :header-cell-style="{background:'#f9fafc'}"
       >
-      <el-table-column
-      type="index"
-      width="100">
-    </el-table-column>
-      
+        <el-table-column
+          type="index"
+          width="100"
+        >
+        </el-table-column>
+
         <el-table-column
           v-for="(item,index) in attrs"
           :key="index"
@@ -189,7 +190,7 @@ export default {
     },
     //获取表格数据
     getTableData() {
-        console.log("ser",this.viewSearch.data);
+      console.log("ser", this.viewSearch.data);
       api
         .viewData({
           condition: this.viewSearch.data,
@@ -198,7 +199,7 @@ export default {
         })
         .then(res => {
           this.viewTable.data = res.data.rtnData;
-           this.viewTable.pageInfo.total = res.data.pageInfo.total;
+          this.viewTable.pageInfo.total = res.data.pageInfo.total;
         })
         .catch(error => {
           console.log(error);

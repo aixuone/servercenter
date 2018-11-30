@@ -594,33 +594,36 @@ export default {
   },
   methods: {
     //   获取字典列表
-    getDics(){
-         api
+    getDics() {
+      api
         .getDataObjectsList({
           type: "",
           isDic: "true",
           name: "",
           pageInfo: {
-              page:0,
-              pageSize:0
+            page: 0,
+            pageSize: 0
           }
         })
         .then(res => {
-           if (res.success) {
-               this.plugs.select3 = res.data.list;
-           }else{
-               Message.error("获取字典列表失败。");
-           }
+          if (res.success) {
+            this.plugs.select3 = res.data.list;
+          } else {
+            Message.error("获取字典列表失败。");
+          }
         })
         .catch(error => {
           console.log(error);
-          Message.error("网络错误。"+error);
+          Message.error("网络错误。" + error);
         });
     },
     //获取表格数据
     handleSearch() {
       api
-        .getDataObjectAttrsList({ resId: this.resId,pageInfo:{page:0,pageSize:0}})
+        .getDataObjectAttrsList({
+          resId: this.resId,
+          pageInfo: { page: 0, pageSize: 0 }
+        })
         .then(res => {
           this.viewTable.data = res.data.list;
         })
