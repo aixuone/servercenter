@@ -35,6 +35,15 @@ export default new Router({
             component: Home
           },
           {
+            path: "/demo",
+            name: "demo",
+            meta: {
+              title: "demo",
+              hideInMenu: false
+            },
+            component: () => import('@/views/main/pages/DataCenterUser.vue')
+          },
+          {
             path: "/createcode",
             name: "createcode",
             meta: {

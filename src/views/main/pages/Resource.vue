@@ -329,6 +329,7 @@ import axios from "@/libs/axios";
 import api from "@/api/data-model/data";
 import { Message } from "element-ui";
 import selectObjAttr from "./../components/plug_select_objAttr";
+
 export default {
   name: "Resource",
   components: { selectObjAttr },
@@ -484,9 +485,14 @@ export default {
      */
     addSingle() {
       console.log(this._DatasetAttrs);
-        var o = Object.assign({}, this.viewAdd.data);
-        console.log(o.type);        
-      if (o.type=="对象"||(o.type=="数据集"&&this._DatasetAttrs && this._DatasetAttrs.length > 0)) {
+      var o = Object.assign({}, this.viewAdd.data);
+      console.log(o.type);
+      if (
+        o.type == "对象" ||
+        (o.type == "数据集" &&
+          this._DatasetAttrs &&
+          this._DatasetAttrs.length > 0)
+      ) {
         api
           .addDataObject(o)
           .then(res => {
@@ -573,7 +579,7 @@ export default {
       console.log("adddDatasetAttrs 接口", list);
 
       api
-        .addDataObjectAttr({ objectId: resId , list: list })
+        .addDataObjectAttr({ objectId: resId, list: list })
         .then(res => {
           console.log("添加属性", res);
           if (res.success == true) {

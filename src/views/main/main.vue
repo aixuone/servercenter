@@ -9,7 +9,7 @@
       >
         <el-menu-item
           index="1"
-          route="/resource"
+          route="/"
         >数据服务中心</el-menu-item>
         <el-menu-item
           index="2"
@@ -19,6 +19,10 @@
           index="3"
           route="/createcode"
         ><i class="fa fa-codepen"></i>代码生成</el-menu-item>
+      <el-menu-item
+          index="4"
+          route="/demo"
+        ><i class="fa fa-page"></i>模版demo</el-menu-item>
       </el-menu>
     </el-aside>
 

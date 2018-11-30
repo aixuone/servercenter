@@ -322,7 +322,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="引用字典对象：">
-         <el-select
+          <el-select
             v-model="viewEdit.data.disRes"
             placeholder="请选择"
           >
@@ -505,9 +505,7 @@ export default {
           { label: "数字", value: "数字" },
           { label: "身份证", value: "身份证" }
         ],
-        select3: [
-            { label: "pc", value: "pc" }
-        ]
+        select3: [{ label: "pc", value: "pc" }]
       }
     };
   },
@@ -518,33 +516,36 @@ export default {
   },
   methods: {
     //   获取字典列表
-    getDics(){
-         api
+    getDics() {
+      api
         .getDataObjectsList({
           type: "",
           isDic: "true",
           name: "",
           pageInfo: {
-              page:0,
-              pageSize:0
+            page: 0,
+            pageSize: 0
           }
         })
         .then(res => {
-           if (res.success) {
-               this.plugs.select3 = res.data.list;
-           }else{
-               Message.error("获取字典列表失败。");
-           }
+          if (res.success) {
+            this.plugs.select3 = res.data.list;
+          } else {
+            Message.error("获取字典列表失败。");
+          }
         })
         .catch(error => {
           console.log(error);
-          Message.error("网络错误。"+error);
+          Message.error("网络错误。" + error);
         });
     },
     //获取表格数据
     handleSearch() {
       api
-        .getDataObjectAttrsList({ resId: this.resId,pageInfo:{page:0,pageSize:0}})
+        .getDataObjectAttrsList({
+          resId: this.resId,
+          pageInfo: { page: 0, pageSize: 0 }
+        })
         .then(res => {
           this.viewTable.data = res.data.list;
         })
@@ -638,7 +639,7 @@ export default {
       var list = [];
       list[0] = o;
       api
-        .addDataObjectAttr({ objectId: this.resId,list: list })
+        .addDataObjectAttr({ objectId: this.resId, list: list })
         .then(res => {
           console.log("添加", res);
           if (res.success == true) {
