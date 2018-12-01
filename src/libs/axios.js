@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 // import store from "../store";
-const api_base_url = "http://192.168.18.188:19081";
+// const api_base_url = "http://192.168.18.188:19081";
+const api_base_url = "http://localhost:19081";
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 const instance = axios.create({
     baseURL: api_base_url,
