@@ -10,7 +10,7 @@
       <el-button
         type="primary"
         @click="handleAdd()"
-      >添加</el-button>
+      >添加1</el-button>
     </p>
     <br>
     <div class="viewTableClass">
@@ -105,13 +105,16 @@
     <el-dialog
       title="添加数据对象属性"
       :visible.sync="viewAdd.show"
+       @close="closeDialog" 
+      :close-on-click-modal="false"
       width="30%"
       id="viewAdd"
     >
       <el-form
         :model="viewAdd.data"
-        :rules="rules" ref="viewAdd.data"
+        :rules="rules" ref="form"
         label-position="right"
+
         label-width="120px"
       >
         <el-form-item label="字段名：" prop="columnName">
@@ -167,7 +170,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" prop="dicRes">
+        <el-form-item label="引用字典对象：" >
           <el-select
             v-model="viewAdd.data.dicRes"
             placeholder="请选择"
@@ -188,7 +191,7 @@
           ></el-input>
         </el-form-item>
         
-        <el-form-item label="索引类型：" prop="indexType">
+        <el-form-item label="索引类型：">
           <el-select
             v-model="viewAdd.data.indexType"
             placeholder="请选择"
@@ -207,7 +210,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull" v-show="viewAdd.data.indexType!='主键'">
+        <el-form-item label="是否为空：" v-show="viewAdd.data.indexType!='主键'">
           <template>
             <el-radio
               v-model="viewAdd.data.isNull"
@@ -219,7 +222,7 @@
             >否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement" v-show="viewAdd.data.indexType=='主键'">
+        <el-form-item label="自增序列：" v-show="viewAdd.data.indexType=='主键'">
           <template>
             <el-radio
               v-model="viewAdd.data.isIncrement"
@@ -578,38 +581,19 @@ export default {
             //新增的表单的验证
         rules: {
           columnName: [
-             { validator: columnNames, trigger: 'blur' }
+             { required: true, validator: columnNames, trigger: 'blur' }
           ],
           jdbcType: [
             { required: true, message: '请选择数据类型', trigger: 'change'}
           ],
           length: [
-            { validator: lengths, trigger: 'blur' }
+            {required: true, validator: lengths, trigger: 'blur' }
           ],
           name: [
             { required: true, message: '请输入名称',trigger: 'blur' }
           ],
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
-          ],
-           dicRes: [
-            {required: true, message: '请选择引用的字典对象', trigger: 'change' }
-          ],
-           rule: [
-            {required: true, message: '请输入规则', trigger: 'blur' }
-          ],
-           isNull: [
-            {required: true, message: '请选择是否为空', trigger: 'change' }
-          ],
-          indexType :[
-            {required: true, message: '请选择索引类型', trigger: 'change' }
-          ],
-
-          isKey: [
-            {required: true, message: '请选择是否为主键', trigger: 'change' }
-          ],
-          isIncrement: [
-            {required: true, message: '请选择自增序列', trigger: 'blur' }
           ]
         }
 
@@ -809,13 +793,18 @@ export default {
     handleAdd(item) {
       this.viewAdd.show = true;
     },
+    // 对话框关闭事件
+    closeDialog(){
+        // 点击关闭 数据重置
+        this.$refs['form'].resetFields();
+    },
     /**
      * @function () addeSingle()
      * @description 添加单项
      */
     addSingle() {
                     //新增弹框的表单验证
-      this.$refs['viewAdd.data'].validate((valid) => {
+      this.$refs['form'].validate((valid) => {
             if (valid) {
                   var o = Object.assign({}, this.viewAdd.data);
                   o.resId = this.resId;
@@ -867,7 +856,7 @@ export default {
      */
     addCancel(){
         this.viewAdd.show = false
-        this.$refs['viewAdd.data'].resetFields();
+        this.$refs['form'].resetFields();
     }
 
 

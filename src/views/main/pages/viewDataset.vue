@@ -345,34 +345,7 @@ export default {
         ],
         select3: []
       },
-        //     //新增的表单的验证
-        // rules: {
-        //   columnName: [
-        //       { validator: columnNames, trigger: 'blur' }
-        //   ],
-        //   jdbcType: [
-        //       { required: true, message: '请选择数据类型', trigger: 'change'}
-        //   ],
-        //   length: [
-        //      { validator: lengths, trigger: 'blur' }
-        //   ],
-        //   name: [
-        //     { required: true, message: '请输入名称',trigger: 'blur' }
-        //   ],
-        //   description: [
-        //     {required: true, message: '请输入说明', trigger: 'blur' }
-        //   ],
-        //   type: [
-        //     {required: true, message: '请选择类型', trigger: 'change' }
-        //   ],
-        //    disRes: [
-        //     {required: true, message: '请选择引用的字典对象', trigger: 'change' }
-        //   ],
-        //    rule: [
-        //     {required: true, message: '请输入规则', trigger: 'blur' }
-        //   ]
 
-        // },
         //添加数据集 数据集属性列表
       _DatasetAttrs:[]
     };
@@ -508,7 +481,6 @@ export default {
 
         editCancel() {
             this.viewEdit.show = false;
-            this.$refs['viewEdit.data'].resetFields();
               
         },  
 

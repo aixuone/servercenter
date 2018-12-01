@@ -150,13 +150,15 @@
     <el-dialog
       title="创建数据对象"
       :visible.sync="viewAdd.show"
+      @close="closeDialog" 
+      :close-on-click-modal="false"
       width="30%"
       id="viewAdd"
     >
       <el-form
         :model="viewAdd.data"
         :rules="addrules" 
-        ref="viewAdd.data"
+         ref="form"
         label-position="right"
         label-width="120px"
       >
@@ -215,7 +217,7 @@
       >
         <el-button
           type="danger"
-          @click="addCancel()"
+          @click="addCancel('formb')"
         >取消</el-button>
         <el-button
           type="primary"
@@ -227,12 +229,14 @@
     <el-dialog
       title="修改数据集属性"
       :visible.sync="viewEdit.show"
+      @close="closeDialog" 
+      :close-on-click-modal="false"
       width="30%"
       id="viewEdit"
     >
       <el-form
         :model="viewEdit.data"
-        :rules="reviserules" ref="viewEdit.data"
+        :rules="reviserules" ref="form"
         label-position="right"
         label-width="120px"
       >
@@ -421,10 +425,7 @@ export default {
         },
 
 
-
-
-        
-
+      
 
       //添加数据集 数据集属性列表
       _DatasetAttrs: []
@@ -489,17 +490,15 @@ export default {
         }
 
         for(var attr in obj1){
-          console.log("属性",attr)
+          // console.log("属性",attr)
             var t1 = obj1[attr] instanceof Object;
 
             var t2 = obj2[attr] instanceof Object;
-            console.log(55,t1,t2)
+            // console.log(55,t1,t2)
             if(t1 && t2){
-              console.log(888)
                 return diff(obj1[attr],obj2[attr]);
                
             }else if(obj1[attr] !== obj2[attr]){
-               console.log(999)
                 return false;
                
             }
@@ -518,11 +517,12 @@ export default {
         if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
            Message.warning("修改前和修改后的数据一致");
         }else{
-            this.$refs['viewEdit.data'].validate((valid) => {
+            this.$refs['form'].validate((valid) => {
             if (valid) {
                api
               .editDataObject(this.viewEdit.data)
               .then(res => {
+                console.log("修改",res)
                 if ((res.success = true)) {
                   Message.success("修改成功");
                   this.handleSearch();
@@ -552,7 +552,7 @@ export default {
      */
         editCancel() {
             this.viewEdit.show = false;
-            this.$refs['viewEdit.data'].resetFields();
+            this.$refs['form'].resetFields();
         },
 
     /**
@@ -593,15 +593,19 @@ export default {
      * @description 表格 修改数据
      * @param {Object} item 表格一行数据
      */
-    handleAdd(item) {
+    handleAdd(item,) {
       this.viewAdd.show = true;
     },
+     closeDialog(){
+            // 点击关闭 数据重置
+            this.$refs['form'].resetFields();
+      },
     /**
      * @function () addeSingle()
      * @description 添加单项
      */
     addSingle() {
-      this.$refs['viewAdd.data'].validate((valid) => {
+      this.$refs['form'].validate((valid) => {
               if (valid) {
                 console.log(this._DatasetAttrs);
                 var o = Object.assign({}, this.viewAdd.data);
@@ -652,7 +656,8 @@ export default {
      */
     addCancel(){
         this.viewAdd.show = false
-        this.$refs['viewAdd.data'].resetFields();
+          // this.dialogFormVisible = false;
+        this.$refs['form'].resetFields();
     },
 
 
