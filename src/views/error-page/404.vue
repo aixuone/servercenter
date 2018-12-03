@@ -1,11 +1,12 @@
 <template>
     <div>
         <error-content code="404" desc="找不到您访问的页面~" :src="src"/>
+        
     </div>
 </template>
 
 <script>
-import error404 from "../../assets/error-page/error-404.svg";
+import error404 from "../../assets/error-page/404.svg";
 import errorContent from "./error-content.vue";
 export default {
   name: "error_404",

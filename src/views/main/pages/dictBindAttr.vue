@@ -10,6 +10,7 @@
       <el-select
         v-model="key"
         placeholder="请选择"
+        class="form-medium-width"
       >
         <el-option
           v-for="(item,index) in objlist"
@@ -23,6 +24,7 @@
       <el-select
         v-model="value"
         placeholder="请选择"
+        class="form-medium-width"
       >
         
         <el-option
@@ -37,6 +39,7 @@
       <el-select
         v-model="parentId"
         placeholder="请选择"
+        class="form-medium-width"
       >
         <el-option label="--" value=""></el-option>
         

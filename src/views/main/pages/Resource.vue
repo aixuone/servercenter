@@ -16,6 +16,7 @@
         <el-select
           v-model="viewSearch.data.type"
           placeholder="请选择"
+          class="form-small-width"
         >
           <el-option
             label="--"
@@ -35,6 +36,7 @@
         <el-select
           v-model="viewSearch.data.isDic"
           placeholder="请选择"
+          class="form-small-width"
         >
           <el-option
             label="--"
@@ -73,11 +75,12 @@
         :data="viewTable.data"
         border
         :header-cell-style="{background:'#f9fafc'}"
+        height="100%"
       >
         <el-table-column
           prop="id"
           label="ID"
-          width="50"
+          fixed
         ></el-table-column>
         <el-table-column
           prop="name"
@@ -106,6 +109,7 @@
         <el-table-column
           label="操作"
           width="300"
+          fixed="right"
         >
           <template slot-scope="scope">
             <el-button

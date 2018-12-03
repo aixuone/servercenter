@@ -18,11 +18,12 @@
         :data="viewTable.data"
         border
         :header-cell-style="{background:'#f9fafc'}"
+        height="100%"
       >
         <el-table-column
           prop="id"
           label="ID"
-          width="100"
+          fixed
         ></el-table-column>
         <el-table-column
           prop="columnName"
@@ -65,6 +66,7 @@
         <el-table-column
           label="操作"
           width="200"
+          fixed
         >
           <template slot-scope="scope">
             <el-button

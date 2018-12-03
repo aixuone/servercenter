@@ -37,7 +37,8 @@
           <el-form-item>
             <el-select
               v-model="item.condition"
-              placeholder="请选择"
+              placeholder="符号"
+              class="form-small-width"
             >
               <el-option
                 label=">"
@@ -86,6 +87,7 @@
         :data="viewTable.data"
         border
         :header-cell-style="{background:'#f9fafc'}"
+        height="100%"
       >
         <el-table-column
           type="index"
