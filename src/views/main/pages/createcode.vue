@@ -1,6 +1,10 @@
 <template>
   <div class="resource">
-    <br/><br/><br/>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <div class="breadxian"></div>
+      <el-breadcrumb-item>代码生成</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div class="breadbottom"></div>
     <h3>基于数据服务</h3>
     <br/><br/><br/>
     <el-form inline :model="view.data" label-position="right" label-width="80px">
@@ -18,7 +22,7 @@
       </el-form-item>
     </el-form>
     <el-dialog title="生成代码" :visible.sync="view.show" width="30%" id="viewDS">
-      <el-form :model="view.data" label-position="right" label-width="120px">
+      <el-form :model="view.data" label-position="right" label-width="130px">
         <el-form-item label="资源目录" prop="tableNames">
           <el-select v-model="view.data.index" placeholder="请选择">
             <el-option v-for="(item,index) in view.list" :label="item.name" :value="index" :key="index"></el-option>
@@ -50,7 +54,7 @@
     <br/><br/><br/>
     <h3>基于数据库</h3>
     <br/><br/><br/>
-    <el-form inline :model="viewDb.data" label-position="right" label-width="80px">
+    <el-form inline :model="viewDb.data" label-position="right" label-width="100px" >
       <el-form-item label="作者姓名">
         <el-input v-model="viewDb.data.name" placeholder="输入姓名"></el-input>
       </el-form-item>

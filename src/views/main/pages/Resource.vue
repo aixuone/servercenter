@@ -154,38 +154,43 @@
     <el-dialog
       title="创建数据对象"
       :visible.sync="viewAdd.show"
-      @close="closeDialog" 
+      @close="closeDialog('addForm')"
       :close-on-click-modal="false"
       width="30%"
       id="viewAdd"
     >
       <el-form
         :model="viewAdd.data"
-        :rules="addrules" 
-         ref="form"
+        :rules="addrules"
+        ref="addForm"
         label-position="right"
         label-width="120px"
       >
-        <el-form-item label="名称：" prop='name'>
+        <el-form-item
+          label="名称："
+          prop='name'
+        >
           <el-input
             v-model="viewAdd.data.name"
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="类型：" prop='type'>
+        <el-form-item
+          label="类型："
+          prop='type'
+        >
           <template>
             <el-radio-group v-model="viewAdd.data.type">
-              <el-radio 
-                label="对象"
-              >对象</el-radio>
-              <el-radio
-                label="数据集"
-              >数据集</el-radio>
+              <el-radio label="对象">对象</el-radio>
+              <el-radio label="数据集">数据集</el-radio>
             </el-radio-group>
 
           </template>
         </el-form-item>
-        <el-form-item label="数据定义：" prop='defined' >
+        <el-form-item
+          label="数据定义："
+          prop='defined'
+        >
           <el-input
             type="textarea"
             :rows="3"
@@ -193,7 +198,10 @@
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否字典：" prop='isDic'>
+        <el-form-item
+          label="是否字典："
+          prop='isDic'
+        >
           <template>
             <el-radio-group v-model="viewAdd.data.isDic">
               <el-radio label="true">是
@@ -202,7 +210,7 @@
             </el-radio-group>
           </template>
         </el-form-item>
-        <el-form-item label="说明："  >
+        <el-form-item label="说明：">
           <el-input
             v-model="viewAdd.data.description"
             placeholder="请输入字段名"
@@ -233,58 +241,67 @@
     <el-dialog
       title="修改数据集属性"
       :visible.sync="viewEdit.show"
-      @close="closeDialog" 
+      @close="closeDialog('editForm')"
       :close-on-click-modal="false"
       width="30%"
       id="viewEdit"
     >
       <el-form
         :model="viewEdit.data"
-        :rules="reviserules" ref="form"
+        :rules="reviserules"
+        ref="editForm"
         label-position="right"
         label-width="120px"
       >
-        <el-form-item label="名称：" prop="name">
+        <el-form-item
+          label="名称："
+          prop="name"
+        >
           <el-input
             v-model="viewEdit.data.name"
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
 
-         <el-form-item label="类型： " v-show="false" prop='type'>
+        <el-form-item
+          label="类型： "
+          v-show="false"
+          prop='type'
+        >
           <template>
-            <el-radio-group  v-model="viewEdit.data.type">
-              <el-radio 
-                label="对象"
-              >对象</el-radio>
-              <el-radio
-                label="数据集"
-              >数据集</el-radio>
+            <el-radio-group v-model="viewEdit.data.type">
+              <el-radio label="对象">对象</el-radio>
+              <el-radio label="数据集">数据集</el-radio>
             </el-radio-group>
 
           </template>
         </el-form-item>
 
-        <el-form-item label="数据定义：" prop="defined">
+        <el-form-item
+          label="数据定义："
+          prop="defined"
+        >
           <el-input
             v-model="viewEdit.data.defined"
             placeholder="请输入字段名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="是否字典：" prop="isDic">
+        <el-form-item
+          label="是否字典："
+          prop="isDic"
+        >
           <template>
             <el-radio-group v-model="viewEdit.data.isDic">
-              <el-radio
-                label="true"
-              >是</el-radio>
-              <el-radio
-                label="false"
-              >否</el-radio>
+              <el-radio label="true">是</el-radio>
+              <el-radio label="false">否</el-radio>
             </el-radio-group>
 
           </template>
         </el-form-item>
-        <el-form-item label="说明：" prop="description">
+        <el-form-item
+          label="说明："
+          prop="description"
+        >
           <el-input
             v-model="viewEdit.data.description"
             placeholder="请输入字段名"
@@ -394,42 +411,26 @@ export default {
         item: {},
         index: ""
       },
-       //新增数据对象的表单的验证
-        addrules: {
-          name: [
-            { required: true, message: '请输入字段名', trigger: 'blur' }
-          ],
-          type: [
-            {required: true,  message: '请选择类型', trigger: 'change'}
-          ],
-          defined: [
-            {required: true,  message: '输入数据定义', trigger: 'blur'}
-          ],
-          isDic: [
-            { required: true, message: '请选择是否是字典',trigger: 'change' }
-          ]
-         
-        },
-        reviserules:{
-           name: [
-            { required: true, message: '请输入字段名', trigger: 'blur' }
-          ],
-          type: [
-            {required: true,  message: '请选择类型', trigger: 'change'}
-          ],
-          defined: [
-            {required: true,  message: '输入数据定义', trigger: 'blur'}
-          ],
-          isDic: [
-            { required: true, message: '请选择是否是字典',trigger: 'change' }
-          ],
-           description: [
-            { required: true, message: '添加对表的描述',trigger: 'blur' }
-          ]
-        },
-
-
-      
+      //新增数据对象的表单的验证
+      addrules: {
+        name: [{ required: true, message: "请输入字段名", trigger: "blur" }],
+        type: [{ required: true, message: "请选择类型", trigger: "change" }],
+        defined: [{ required: true, message: "输入数据定义", trigger: "blur" }],
+        isDic: [
+          { required: true, message: "请选择是否是字典", trigger: "change" }
+        ]
+      },
+      reviserules: {
+        name: [{ required: true, message: "请输入字段名", trigger: "blur" }],
+        type: [{ required: true, message: "请选择类型", trigger: "change" }],
+        defined: [{ required: true, message: "输入数据定义", trigger: "blur" }],
+        isDic: [
+          { required: true, message: "请选择是否是字典", trigger: "change" }
+        ],
+        description: [
+          { required: true, message: "添加对表的描述", trigger: "blur" }
+        ]
+      },
 
       //添加数据集 数据集属性列表
       _DatasetAttrs: []
@@ -444,7 +445,7 @@ export default {
         pageInfo: this.viewTable.pageInfo
       })
       .then(res => {
-        console.log ("我是成功返回的res",res)
+        console.log("我是成功返回的res", res);
         this.viewTable.data = res.data.list;
         this.viewTable.pageInfo.total = res.data.pageInfo.total;
       })
@@ -469,95 +470,84 @@ export default {
       this.viewEdit.show = true;
     },
 
-      /**
+    /**
      * @function () diff(obj1,obj2)
      * @description 验证修改前和修改后是不是一致
-     * @param {Object} item 
+     * @param {Object} item
      * @param {String} index 数据第几项
      */
 
+    diff(obj1, obj2) {
+      console.log("我是diff", 1111);
+      // console.log('obj12'+ obj1,obj2)
+      var o1 = obj1 instanceof Object;
+      var o2 = obj2 instanceof Object;
+      console.log(22, o1, o2);
+      if (!o1 || !o2) {
+        /*  判断不是对象  */
+        return obj1 === obj2;
+      }
 
+      if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+        return false;
+        //Object.keys() 返回一个由对象的自身可枚举属性(key值)组成的数组,例如：数组返回下表：let arr = ["a", "b", "c"];console.log(Object.keys(arr))->0,1,2;
+      }
 
-    diff(obj1,obj2){
-      console.log("我是diff",1111)
-        // console.log('obj12'+ obj1,obj2)
-        var o1 = obj1 instanceof Object;
-        var o2 = obj2 instanceof Object;
-        console.log(22,o1,o2)
-        if(!o1 || !o2){/*  判断不是对象  */
-            return obj1 === obj2;
+      for (var attr in obj1) {
+        // console.log("属性",attr)
+        var t1 = obj1[attr] instanceof Object;
+
+        var t2 = obj2[attr] instanceof Object;
+        // console.log(55,t1,t2)
+        if (t1 && t2) {
+          return diff(obj1[attr], obj2[attr]);
+        } else if (obj1[attr] !== obj2[attr]) {
+          return false;
         }
-
-        if(Object.keys(obj1).length !== Object.keys(obj2).length){
-            return false;
-            //Object.keys() 返回一个由对象的自身可枚举属性(key值)组成的数组,例如：数组返回下表：let arr = ["a", "b", "c"];console.log(Object.keys(arr))->0,1,2;
-        }
-
-        for(var attr in obj1){
-          // console.log("属性",attr)
-            var t1 = obj1[attr] instanceof Object;
-
-            var t2 = obj2[attr] instanceof Object;
-            // console.log(55,t1,t2)
-            if(t1 && t2){
-                return diff(obj1[attr],obj2[attr]);
-               
-            }else if(obj1[attr] !== obj2[attr]){
-                return false;
-               
-            }
-        }
-        return true;
+      }
+      return true;
     },
-
-
-
 
     /**
      * @function () editSingle()
      * @description 修改单项
      */
     editSingle() {
-        if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
-           Message.warning("修改前和修改后的数据一致");
-        }else{
-            this.$refs['form'].validate((valid) => {
-            if (valid) {
-               api
+      if (this.diff(this.viewEdit.data, this.viewEdit.old) == true) {
+        Message.warning("修改前和修改后的数据一致");
+      } else {
+        this.$refs["editForm"].validate(valid => {
+          if (valid) {
+            api
               .editDataObject(this.viewEdit.data)
               .then(res => {
-                console.log("修改",res)
+                console.log("修改", res);
                 if ((res.success = true)) {
                   Message.success("修改成功");
                   this.handleSearch();
                   this.viewEdit.show = false;
                 }
-               })
-                .catch(error => {
-                  console.log(error);
-                  Message.error(error.data.message);
-                });
-                        
-            } else {
-                console.log('error submit!!');
-                 return false;
-            }
+              })
+              .catch(error => {
+                console.log(error);
+                Message.error(error.data.message);
+              });
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
         });
       }
-
-
-
-     
     },
 
- /**
+    /**
      * @function () editCancel()
      * @description 取消
      */
-        editCancel() {
-            this.viewEdit.show = false;
-            this.$refs['form'].resetFields();
-        },
+    editCancel() {
+      this.viewEdit.show = false;
+      this.$refs["editForm"].resetFields();
+    },
 
     /**
      * @function () handleDelet(item)
@@ -597,74 +587,74 @@ export default {
      * @description 表格 修改数据
      * @param {Object} item 表格一行数据
      */
-    handleAdd(item,) {
+    handleAdd(item) {
       this.viewAdd.show = true;
     },
-     closeDialog(){
-            // 点击关闭 数据重置
-            this.$refs['form'].resetFields();
-      },
+    closeDialog(formName) {
+      // 点击关闭 数据重置
+      this.$refs[formName].resetFields();
+    },
     /**
      * @function () addeSingle()
      * @description 添加单项
      */
     addSingle() {
-      this.$refs['form'].validate((valid) => {
-              if (valid) {
-                console.log(this._DatasetAttrs);
-                var o = Object.assign({}, this.viewAdd.data);
-                console.log(o.type);        
-              if (o.type=="对象"||(o.type=="数据集"&&this._DatasetAttrs && this._DatasetAttrs.length > 0)) {
-                api
-                  .addDataObject(o)
-                  .then(res => {
-                    console.log(88,res)
-                    if (res.success == true) {
-                      Message.success("添加成功");
-                      if (o.type == "对象") {
-                        this.handleSearch();
-                      } else {
-                        console.log("addDataAttrs 开始");
-                        //添加属性列表
-                        this.addDatasetAttrs(res.data.id);
-                      }
-                      this.handleSearch();
-                      //清除新建窗口信息
-                      for (var i in this.viewAdd.data) {
-                        this.viewAdd.data[i] = "";
-                      }
-                      this.viewAdd.show = false;
-                    } else {
-                      Message.error("添加失败。");
-                    }
-                  })
-                  .catch(error => {
-                    console.log(error);
-                    Message.error(error.data.message);
-                  });
-              } else {
-                Message.warning("创建数据集，数据集属性不能为空。");
-                return;
-              }
-            } else {
-                console.log('error submit!!');
-                return false;
-            }
+      this.$refs["addForm"].validate(valid => {
+        if (valid) {
+          console.log("验证通过", this._DatasetAttrs);
+          var o = Object.assign({}, this.viewAdd.data);
+          if (
+            o.type == "对象" ||
+            (o.type == "数据集" &&
+              this._DatasetAttrs &&
+              this._DatasetAttrs.length > 0)
+          ) {
+            api
+              .addDataObject(o)
+              .then(res => {
+                if (res.success == true) {
+                  Message.success("添加成功");
+                  if (o.type == "对象") {
+                    this.handleSearch();
+                  } else {
+                    //添加属性列表
+                    this.addDatasetAttrs(res.data.id);
+                  }
+                  this.handleSearch();
+                  //清除新建窗口信息
+                  for (var i in this.viewAdd.data) {
+                    this.viewAdd.data[i] = "";
+                  }
+                  this.viewAdd.show = false;
+                } else {
+                  Message.error("添加失败。");
+                }
+              })
+              .catch(error => {
+                console.log(error);
+                Message.error(error.data.message);
+              });
+          } else {
+            Message.warning("创建数据集，数据集属性不能为空。");
+            return;
+          }
+        } else {
+          console.log("error submit!!");
+          Message.warning("请确认表单是否填写完整。");
+          return false;
+        }
       });
-   
     },
 
     /**
      * @function () addCancel()
      * @description 新增弹框取消
      */
-    addCancel(){
-        this.viewAdd.show = false
-          // this.dialogFormVisible = false;
-        this.$refs['form'].resetFields();
+    addCancel() {
+      this.viewAdd.show = false;
+      // this.dialogFormVisible = false;
+      this.$refs["addForm"].resetFields();
     },
-
-
 
     // 搜索 得到表格数据
     handleSearch() {
