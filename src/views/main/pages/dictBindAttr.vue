@@ -5,7 +5,9 @@
     label-position="right"
     label-width="80px"
   >
+  <el-form-item >
     <label>数据字典映射：</label>
+  </el-form-item>
     <el-form-item label="key:">
       <el-select
         v-model="key"
