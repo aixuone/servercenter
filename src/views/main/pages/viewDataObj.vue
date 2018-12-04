@@ -10,7 +10,7 @@
       <el-button
         type="primary"
         @click="handleAdd()"
-      >添加1</el-button>
+      >添加</el-button>
     </p>
     <br>
     <div class="viewTableClass">
@@ -114,7 +114,7 @@
     >
       <el-form
         :model="viewAdd.data"
-        :rules="rules" ref="form"
+        :rules="addrules" ref="addform"
         label-position="right"
 
         label-width="120px"
@@ -262,6 +262,7 @@
         :model="viewEdit.data"
         label-position="right"
         label-width="120px"
+        :rules="editrules" ref="editform"
       >
         <el-form-item label="字段名：" >
           <el-input
@@ -290,7 +291,7 @@
           ></el-input>
 
         </el-form-item>
-        <el-form-item label="名称：" >
+        <el-form-item label="名称：" prop="name">
           <el-input
             v-model="viewEdit.data.name"
             placeholder="请输入名称"
@@ -469,6 +470,42 @@ export default {
                     }
         }, 1000);
       };
+
+
+//数据的名称
+       var chineses = (rule, value, callback) => {
+        console.log(11,rule)
+        if (!value) {
+          return callback(new Error('名称不能为空'));
+        }
+        setTimeout(() => {
+              var reg = /^[\u4e00-\u9fa5]+$/;
+                    if (!reg.test(value)) {
+                          callback(new Error('名字应为中文'));
+                    } else {
+                        callback();
+                    }
+        }, 1000);
+      };
+     
+//数据的名称
+       var chinesess = (rule, value, callback) => {
+        console.log(11,rule)
+          if (!value) {
+             return callback();
+           }
+        setTimeout(() => {
+              var reg = /^[\u4e00-\u9fa5]+$/;
+                    if (!reg.test(value)) {
+                          callback(new Error('名字应为中文'));
+                    } else {
+                        callback();
+                    }
+        }, 1000);
+      };
+
+
+
     return {
       // booleans:true, //按钮的禁用和不禁用状态
       headerTitle: "对象属性列表",
@@ -487,7 +524,12 @@ export default {
         data: {
             isIncrement : 'false',
             isNull : 'true',
-            indexType:'--'
+            indexType:'--',
+            columnName: "",
+            jdbcType:"",
+            length:"",
+            name:"",
+            type:""
         },
         show: false
       },
@@ -540,48 +582,8 @@ export default {
             { label: "查询列表失败", value: "" }
         ]
       },
-        //     //新增的表单的验证
-        // rules: {
-        //   columnName: [
-        //      { validator: columnNames, trigger: 'blur' }
-        //   ],
-        //   jdbcType: [
-        //     { required: true, message: '请选择数据类型', trigger: 'change'}
-        //   ],
-        //   length: [
-        //     { validator: lengths, trigger: 'blur' }
-        //   ],
-        //   name: [
-        //     { required: true, message: '请输入名称',trigger: 'blur' }
-        //   ],
-        //   description: [
-        //     {required: true, message: '请输入说明', trigger: 'blur' }
-        //   ],
-        //   type: [
-        //     {required: true, message: '请选择类型', trigger: 'change' }
-        //   ],
-        //    disRes: [
-        //     {required: true, message: '请选择引用的字典对象', trigger: 'change' }
-        //   ],
-        //    rule: [
-        //     {required: true, message: '请输入规则', trigger: 'blur' }
-        //   ],
-        //    isNull: [
-        //     {required: true, message: '请选择是否为空', trigger: 'change' }
-        //   ],
-        //   indexType :[
-        //     {required: true, message: '请选择索引类型', trigger: 'change' }
-        //   ],
-
-        //   isKey: [
-        //     {required: true, message: '请选择是否为主键', trigger: 'change' }
-        //   ],
-        //   isIncrement: [
-        //     {required: true, message: '请选择自增序列', trigger: 'blur' }
-        //   ]
-        // }
             //新增的表单的验证
-        rules: {
+    addrules: {
           columnName: [
              { required: true, validator: columnNames, trigger: 'blur' }
           ],
@@ -592,12 +594,19 @@ export default {
             {required: true, validator: lengths, trigger: 'blur' }
           ],
           name: [
-            { required: true, message: '请输入名称',trigger: 'blur' }
+          
+             {required: true, validator: chineses, trigger: 'blur'}
           ],
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
           ]
-        }
+     },
+
+    editrules:{
+        name:[
+          {validator: chinesess, trigger: 'blur'}
+        ]
+    }
 
 
 
@@ -711,25 +720,27 @@ export default {
            if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
               Message.warning("修改前和修改后的数据一致")
            }else{
-              // if(this.viewEdit.data!= this.viewTable.data[index]){
-              //   this.booleans=false;
-                   api
-                .editDataObjectAttr(this.viewEdit.data)
-                .then(res => {
-                  if ((res.success = true)) {
-                    Message.success("修改成功");
-                    this.handleSearch();
-                    this.viewEdit.show = false;
-                  }
-                })
-                .catch(error => {
-                  console.log(error);
-                  Message.error(error);
-                });
-              // }
-             
-        
-       
+                this.$refs["editform"].validate(valid => {
+                if (valid) {
+                                      api
+                    .editDataObjectAttr(this.viewEdit.data)
+                    .then(res => {
+                      if ((res.success = true)) {
+                        Message.success("修改成功");
+                        this.handleSearch();
+                        this.viewEdit.show = false;
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error);
+                      Message.error(error);
+                    });
+                } else {
+                  console.log("error submit!!");
+                  return false;
+                }
+              });
+
       }
           
 
@@ -743,7 +754,7 @@ export default {
      */
         editCancel() {
             this.viewEdit.show = false;
-            this.$refs['viewEdit.data'].resetFields();
+            this.$refs['editform'].resetFields();
               
         },  
 
@@ -798,7 +809,7 @@ export default {
     // 对话框关闭事件
     closeDialog(){
         // 点击关闭 数据重置
-        this.$refs['form'].resetFields();
+        this.$refs['addform'].resetFields();
     },
     /**
      * @function () addeSingle()
@@ -806,7 +817,7 @@ export default {
      */
     addSingle() {
                     //新增弹框的表单验证
-      this.$refs['form'].validate((valid) => {
+      this.$refs['addform'].validate((valid) => {
             if (valid) {
                   var o = Object.assign({}, this.viewAdd.data);
                   o.resId = this.resId;
@@ -858,7 +869,7 @@ export default {
      */
     addCancel(){
         this.viewAdd.show = false
-        this.$refs['form'].resetFields();
+        this.$refs['addform'].resetFields();
     }
 
 

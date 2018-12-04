@@ -396,13 +396,25 @@ export default {
       },
       //数据新增功能
       viewAdd: {
-        data: {},
+        data: {
+          name:"",
+          type:"",
+          defined:"",
+          isDic:""
+
+        },
         show: false
       },
       //数据修改功能
       viewEdit: {
         index: "",
-        data: "",
+        data: {
+           name:"",
+           type:"",
+           defined:"",
+           isDic:"",
+           description:""
+        },
         show: false
       },
       //数据删除功能
@@ -412,6 +424,7 @@ export default {
         index: ""
       },
       //新增数据对象的表单的验证
+     
       addrules: {
         name: [{ required: true, message: "请输入字段名", trigger: "blur" }],
         type: [{ required: true, message: "请选择类型", trigger: "change" }],
@@ -421,14 +434,14 @@ export default {
         ]
       },
       reviserules: {
-        name: [{ required: true, message: "请输入字段名", trigger: "blur" }],
-        type: [{ required: true, message: "请选择类型", trigger: "change" }],
-        defined: [{ required: true, message: "输入数据定义", trigger: "blur" }],
+        name: [{ required: true, message: "修改后的字段名不能为空", trigger: "blur" }],
+        // type: [{ required: true, message: "请选择类型", trigger: "change" }],
+        defined: [{ required: true, message: "修改后的数据定义不能为空", trigger: "blur" }],
         isDic: [
           { required: true, message: "请选择是否是字典", trigger: "change" }
         ],
         description: [
-          { required: true, message: "添加对表的描述", trigger: "blur" }
+          { required: true, message: "请添加对表的描述", trigger: "blur" }
         ]
       },
 
@@ -600,6 +613,8 @@ export default {
      */
     addSingle() {
       this.$refs["addForm"].validate(valid => {
+        console.log(this.viewAdd.data);
+        
         if (valid) {
           console.log("验证通过", this._DatasetAttrs);
           var o = Object.assign({}, this.viewAdd.data);
