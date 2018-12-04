@@ -380,7 +380,8 @@ export default {
           //数据总数量
           count: 0,
           //每页包含数据量
-          pageSize: 100
+          pageSize: 100,
+          total: 0
         },
         //数据
         data: []

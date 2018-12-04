@@ -7,10 +7,7 @@
     <div class="breadbottom"></div>
     <br>
     <p>
-      <el-button
-        type="primary"
-        @click="handleAdd()"
-      >添加</el-button>
+      <el-button type="primary" @click="handleAdd()">添加</el-button>
     </p>
     <br>
     <div class="viewTableClass">
@@ -20,412 +17,203 @@
         :header-cell-style="{background:'#f9fafc'}"
         height="100%"
       >
-        <el-table-column
-          prop="id"
-          label="ID"
-          width="50"
-          fixed
-        ></el-table-column>
-        <el-table-column
-          prop="columnName"
-          label="字段名"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="jdbcType"
-          label="数据类型"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="length"
-          label="数据长度"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="name"
-          label="名称"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="description"
-          label="说明"
-        ></el-table-column>
-        <el-table-column
-          prop="type"
-          label="类型"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="dicRes"
-          label="引用字典对象"
-        ></el-table-column>
-        <el-table-column
-          prop="rule"
-          label="规则"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="isNull"
-          label="是否为空"
-          :formatter="nullFilter"
-        ></el-table-column>
-        <el-table-column
-          prop="indexType"
-          label="索引类型"
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="isKey"
-          label="是否主键"
-          :formatter="keyFilter"
-        ></el-table-column>
-        <el-table-column
-          prop="isIncrement"
-          label="自增序列"
-          width="100"
-          :formatter="incrementFilter"
-        ></el-table-column>
-        <el-table-column
-          label="操作"
-          width="200"
-          fixed="right"
-        >
+        <el-table-column prop="id" label="ID" width="50" fixed></el-table-column>
+        <el-table-column prop="columnName" label="字段名" width="100"></el-table-column>
+        <el-table-column prop="jdbcType" label="数据类型" width="100"></el-table-column>
+        <el-table-column prop="length" label="数据长度" width="100"></el-table-column>
+        <el-table-column prop="name" label="名称" width="100"></el-table-column>
+        <el-table-column prop="description" label="说明"></el-table-column>
+        <el-table-column prop="type" label="类型" width="100"></el-table-column>
+        <el-table-column prop="dicRes" label="引用字典对象"></el-table-column>
+        <el-table-column prop="rule" label="规则" width="100"></el-table-column>
+        <el-table-column prop="isNull" label="是否为空" :formatter="nullFilter"></el-table-column>
+        <el-table-column prop="indexType" label="索引类型" width="100"></el-table-column>
+        <el-table-column prop="isKey" label="是否主键" :formatter="keyFilter"></el-table-column>
+        <el-table-column prop="isIncrement" label="自增序列" width="100" :formatter="incrementFilter"></el-table-column>
+        <el-table-column label="操作" width="200" fixed="right">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="small"
-              @click="handleEdit(scope.row,scope.$index)"
-            >修改</el-button>
-            <el-button
-              type="danger"
-              size="small"
-              @click="handleDelet(scope.row,scope.$index)"
-            >删除</el-button>
+            <el-button type="primary" size="small" @click="handleEdit(scope.row,scope.$index)">修改</el-button>
+            <el-button type="danger" size="small" @click="handleDelet(scope.row,scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-
     </div>
     <!-- 对话框区 开始 -->
     <!-- 新增 -->
     <el-dialog
       title="添加数据对象属性"
       :visible.sync="viewAdd.show"
-       @close="closeDialog" 
+      @close="closeDialog"
       :close-on-click-modal="false"
       width="30%"
       id="viewAdd"
     >
       <el-form
         :model="viewAdd.data"
-        :rules="addrules" ref="addform"
+        :rules="addrules"
+        ref="addform"
         label-position="right"
-
         label-width="120px"
       >
         <el-form-item label="字段名：" prop="columnName">
-          <el-input
-            v-model="viewAdd.data.columnName"
-            placeholder="请输入字段名"
-          ></el-input>
+          <el-input v-model="viewAdd.data.columnName" placeholder="请输入字段名"></el-input>
         </el-form-item>
         <el-form-item label="数据类型：" prop="jdbcType">
-          <el-select
-            v-model="viewAdd.data.jdbcType"
-            placeholder="请选择"
-          >
+          <el-select v-model="viewAdd.data.jdbcType" placeholder="请选择">
             <el-option
               v-for="item in plugs.select1"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="数据长度：" prop="length">
-          <el-input
-            v-model="viewAdd.data.length"
-            placeholder="请输入数据长度"
-          ></el-input>
-
+          <el-input v-model="viewAdd.data.length" placeholder="请输入数据长度"></el-input>
         </el-form-item>
         <el-form-item label="名称：" prop="name">
-          <el-input
-            v-model="viewAdd.data.name"
-            placeholder="请输入名称"
-          ></el-input>
+          <el-input v-model="viewAdd.data.name" placeholder="请输入名称"></el-input>
         </el-form-item>
         <el-form-item label="说明：">
-          <el-input
-            v-model="viewAdd.data.description"
-            placeholder="请输入说明"
-          ></el-input>
+          <el-input v-model="viewAdd.data.description" placeholder="请输入说明"></el-input>
         </el-form-item>
-        <el-form-item label="类型："  prop="type">
-          <el-select
-            v-model="viewAdd.data.type"
-            placeholder="请选择"
-          >
+        <el-form-item label="类型：" prop="type">
+          <el-select v-model="viewAdd.data.type" placeholder="请选择">
             <el-option
               v-for="item in plugs.select2"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="引用字典对象：" >
-          <el-select
-            v-model="viewAdd.data.dicRes"
-            placeholder="请选择"
-          >
+        <el-form-item label="引用字典对象：">
+          <el-select v-model="viewAdd.data.dicRes" placeholder="请选择">
             <el-option
               v-for="item in plugs.select3"
               :key="item.id"
               :label="item.name"
               :value="item.name"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="规则：" >
-          <el-input
-            v-model="viewAdd.data.rule"
-            placeholder="请输入规则"
-          ></el-input>
+        <el-form-item label="规则：">
+          <el-input v-model="viewAdd.data.rule" placeholder="请输入规则"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="索引类型：">
-          <el-select
-            v-model="viewAdd.data.indexType"
-            placeholder="请选择"
-          >
-            <el-option
-              label="--"
-              value="--"
-            ></el-option>
-            <el-option
-              label="主键"
-              value="主键"
-            ></el-option>
-            <el-option
-              label="索引"
-              value="索引"
-            ></el-option>
+          <el-select v-model="viewAdd.data.indexType" placeholder="请选择">
+            <el-option label="--" value="--"></el-option>
+            <el-option label="主键" value="主键"></el-option>
+            <el-option label="索引" value="索引"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="是否为空：" v-show="viewAdd.data.indexType!='主键'">
           <template>
-            <el-radio
-              v-model="viewAdd.data.isNull"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewAdd.data.isNull"
-              label="false"
-            >否</el-radio>
+            <el-radio v-model="viewAdd.data.isNull" label="true">是</el-radio>
+            <el-radio v-model="viewAdd.data.isNull" label="false">否</el-radio>
           </template>
         </el-form-item>
         <el-form-item label="自增序列：" v-show="viewAdd.data.indexType=='主键'">
           <template>
-            <el-radio
-              v-model="viewAdd.data.isIncrement"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewAdd.data.isIncrement"
-              label="false"
-            >否</el-radio>
+            <el-radio v-model="viewAdd.data.isIncrement" label="true">是</el-radio>
+            <el-radio v-model="viewAdd.data.isIncrement" label="false">否</el-radio>
           </template>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="danger"
-          @click="addCancel()"
-        >取消</el-button>
-        <el-button
-          type="primary"
-          @click="addSingle()"
-        >确定</el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="addCancel()">取消</el-button>
+        <el-button type="primary" @click="addSingle()">确定</el-button>
       </div>
     </el-dialog>
     <!-- 修改 -->
-    <el-dialog
-      title="修改数据对象属性"
-      :visible.sync="viewEdit.show"
-      width="30%"
-      id="viewEdit"
-    >
+    <el-dialog title="修改数据对象属性" :visible.sync="viewEdit.show" width="30%" id="viewEdit">
       <el-form
         :model="viewEdit.data"
         label-position="right"
         label-width="120px"
-        :rules="editrules" ref="editform"
       >
-        <el-form-item label="字段名：" >
-          <el-input
-            v-model="viewEdit.data.columnName"
-            placeholder="请输入字段名"
-          ></el-input>
+        <el-form-item label="字段名：">
+          <el-input v-model="viewEdit.data.columnName" placeholder="请输入字段名"></el-input>
         </el-form-item>
-        <el-form-item label="数据类型：" >
-          <el-select
-            v-model="viewEdit.data.jdbcType"
-            placeholder="请选择"
-          >
+        <el-form-item label="数据类型：">
+          <el-select v-model="viewEdit.data.jdbcType" placeholder="请选择">
             <el-option
               v-for="item in plugs.select1"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="数据长度：" >
-          <el-input
-            v-model="viewEdit.data.length"
-            placeholder="请输入数据长度"
-          ></el-input>
-
+        <el-form-item label="数据长度：">
+          <el-input v-model="viewEdit.data.length" placeholder="请输入数据长度"></el-input>
         </el-form-item>
         <el-form-item label="名称：" prop="name">
-          <el-input
-            v-model="viewEdit.data.name"
-            placeholder="请输入名称"
-          ></el-input>
+          <el-input v-model="viewEdit.data.name" placeholder="请输入名称"></el-input>
         </el-form-item>
         <el-form-item label="说明：">
-          <el-input
-            v-model="viewEdit.data.description"
-            placeholder="请输入说明"
-          ></el-input>
+          <el-input v-model="viewEdit.data.description" placeholder="请输入说明"></el-input>
         </el-form-item>
-        <el-form-item label="类型：" >
-          <el-select
-            v-model="viewEdit.data.type"
-            placeholder="请选择"
-          >
+        <el-form-item label="类型：">
+          <el-select v-model="viewEdit.data.type" placeholder="请选择">
             <el-option
               v-for="item in plugs.select2"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="引用字典对象：" prop="dicRes">
-         <el-select
-            v-model="viewEdit.data.dicRes"
-            placeholder="请选择"
-          >
+          <el-select v-model="viewEdit.data.dicRes" placeholder="请选择">
             <el-option
               v-for="item in plugs.select3"
               :key="item.id"
               :label="item.name"
               :value="item.name"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="规则：" >
-          <el-input
-            v-model="viewEdit.data.rule"
-            placeholder="请输入规则"
-          ></el-input>
+        <el-form-item label="规则：">
+          <el-input v-model="viewEdit.data.rule" placeholder="请输入规则"></el-input>
         </el-form-item>
         <el-form-item label="索引类型：" prop="indexType">
-          <el-select
-            v-model="viewEdit.data.indexType"
-            placeholder="请选择"
-          >
-            <el-option
-              label="--"
-              value="--"
-            ></el-option>
-            <el-option
-              label="主键"
-              value="主键"
-            ></el-option>
-            <el-option
-              label="索引"
-              value="索引"
-            ></el-option>
+          <el-select v-model="viewEdit.data.indexType" placeholder="请选择">
+            <el-option label="--" value="--"></el-option>
+            <el-option label="主键" value="主键"></el-option>
+            <el-option label="索引" value="索引"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否为空：" prop="isNull"  v-show="viewEdit.data.indexType!='主键'">
+        <el-form-item label="是否为空：" prop="isNull" v-show="viewEdit.data.indexType!='主键'">
           <template>
-            <el-radio
-              v-model="viewEdit.data.isNull"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewEdit.data.isNull"
-              label="false"
-            >否</el-radio>
+            <el-radio v-model="viewEdit.data.isNull" label="true">是</el-radio>
+            <el-radio v-model="viewEdit.data.isNull" label="false">否</el-radio>
           </template>
         </el-form-item>
-        <el-form-item label="自增序列：" prop="isIncrement"  v-show="viewEdit.data.indexType=='主键'">
+        <el-form-item label="自增序列：" prop="isIncrement" v-show="viewEdit.data.indexType=='主键'">
           <template>
-            <el-radio
-              v-model="viewEdit.data.isIncrement"
-              label="true"
-            >是</el-radio>
-            <el-radio
-              v-model="viewEdit.data.isIncrement"
-              label="false"
-            >否</el-radio>
+            <el-radio v-model="viewEdit.data.isIncrement" label="true">是</el-radio>
+            <el-radio v-model="viewEdit.data.isIncrement" label="false">否</el-radio>
           </template>
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="danger"
-          @click="editCancel()"
-        >取消</el-button>
-        <el-button
-          type="primary"
-          @click="editSingle()"
-       >确定</el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="editCancel()">取消</el-button>
+        <el-button type="primary" @click="editSingle()">确定</el-button>
       </div>
     </el-dialog>
     <!-- 删除 -->
-    <el-dialog
-      title="删除"
-      :visible.sync="viewDelet.show"
-      width="30%"
-      id="viewDelet"
-    >
-      <div class="modal-body">
-        您确定删除要删除该项吗?
-      </div>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="danger"
-          @click="viewDelet.show = false"
-        >取消</el-button>
-        <el-button
-          type="primary"
-          @click="deletSingle()"
-        >确定</el-button>
+    <el-dialog title="删除" :visible.sync="viewDelet.show" width="30%" id="viewDelet">
+      <div class="modal-body">您确定删除要删除该项吗?</div>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="danger" @click="viewDelet.show = false">取消</el-button>
+        <el-button type="primary" @click="deletSingle()">确定</el-button>
       </div>
     </el-dialog>
     <!-- 对话框 结束 -->
     <div style="width:100%;position:absolute;bottom:0px;left:0%;text-align:center;">
-        <dictBindAttr :resId="resId"></dictBindAttr>
+      <dictBindAttr :resId="resId"></dictBindAttr>
     </div>
   </div>
 </template>
@@ -441,26 +229,24 @@ export default {
       dictBindAttr
   },
   data() {
-        //字段名的验证
+      //字段名的验证
       var columnNames = (rule, value, callback) => {
-            if (!value) {
-               return callback(new Error('字段名不能为空'));
-            }
-            if (value) {
-                setTimeout(() => {
-                     var reg =  /^[a-zA-Z]\w{0,19}$/;
-                    if (!reg.test(value)) {
-                        callback(new Error('有效的字段名为第一个必须是字母，后面可以是字母、数字、下划线，总长度为5-20！'));
-                    } else {
-                        callback();
-                    }
-                }, 500);
-            }
-        };   
-
-
-//数据的长度
-       var lengths = (rule, value, callback) => {
+        if (!value) {
+            return callback(new Error('字段名不能为空'));
+        }
+        if (value) {
+            setTimeout(() => {
+                  var reg =  /^[a-zA-Z]\w{0,19}$/;
+                if (!reg.test(value)) {
+                    callback(new Error('有效的字段名为第一个必须是字母，后面可以是字母、数字、下划线，总长度为5-20！'));
+                } else {
+                    callback();
+                }
+            }, 500);
+        }
+      };   
+      //数据的长度
+      var lengths = (rule, value, callback) => {
         console.log(11,rule)
         if (!value) {
           return callback(new Error('数据长度不能为空'));
@@ -474,10 +260,8 @@ export default {
                     }
         }, 1000);
       };
-
-
-//数据的名称
-       var chineses = (rule, value, callback) => {
+      //数据的名称
+      var chineses = (rule, value, callback) => {
         console.log(11,rule)
         if (!value) {
           return callback(new Error('名称不能为空'));
@@ -491,24 +275,6 @@ export default {
                     }
         }, 1000);
       };
-     
-//数据的名称
-       var chinesess = (rule, value, callback) => {
-        console.log(11,rule)
-          if (!value) {
-             return callback();
-           }
-        setTimeout(() => {
-              var reg = /^[\u4e00-\u9fa5]+$/;
-                    if (!reg.test(value)) {
-                          callback(new Error('名字应为中文'));
-                    } else {
-                        callback();
-                    }
-        }, 1000);
-      };
-
-
 
     return {
       // booleans:true, //按钮的禁用和不禁用状态
@@ -587,7 +353,7 @@ export default {
         ]
       },
             //新增的表单的验证
-    addrules: {
+      addrules: {
           columnName: [
              { required: true, validator: columnNames, trigger: 'blur' }
           ],
@@ -604,17 +370,7 @@ export default {
           type: [
             {required: true, message: '请选择类型', trigger: 'change' }
           ]
-     },
-
-    editrules:{
-        name:[
-          {validator: chinesess, trigger: 'blur'}
-        ]
-    }
-
-
-
-
+      }
     };
   },
   created() {
@@ -711,11 +467,6 @@ export default {
         return true;
     },
 
-
-
-
-
-
     /**
      * @function () editSingle()
      * @description 修改单项
@@ -724,8 +475,7 @@ export default {
            if(this.diff(this.viewEdit.data,this.viewEdit.old)==true){
               Message.warning("修改前和修改后的数据一致")
            }else{
-                this.$refs["editform"].validate(valid => {
-                if (valid) {
+
                                       api
                     .editDataObjectAttr(this.viewEdit.data)
                     .then(res => {
@@ -739,19 +489,15 @@ export default {
                       console.log(error);
                       Message.error(error);
                     });
-                } else {
-                  console.log("error submit!!");
-                  return false;
-                }
-              });
 
-      }
+              };
+
+      },
           
 
 
 
-      
-    },
+
      /**
      * @function () editCancel()
      * @description 取消
@@ -761,12 +507,6 @@ export default {
             this.$refs['editform'].resetFields();
               
         },  
-
-
-
-
-
-
 
     /**
      * @function () handleDelet(item)
@@ -888,6 +628,11 @@ export default {
         return bool.isIncrement == "true" ? "是" : bool.isIncrement == "false" ? "否" : "未知";
     }
     
+
+
+      
+    }
+
   }
-};
+
 </script>
