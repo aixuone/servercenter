@@ -101,6 +101,7 @@
           prop="isDic"
           label="是否字典"
           width="150"
+          :formatter="dicFilter"
         ></el-table-column>
         <el-table-column
           prop="description"
@@ -168,7 +169,7 @@
       >
         <el-form-item
           label="名称："
-          prop='name'
+          prop="name"
         >
           <el-input
             v-model="viewAdd.data.name"
@@ -177,7 +178,7 @@
         </el-form-item>
         <el-form-item
           label="类型："
-          prop='type'
+          prop="type"
         >
           <template>
             <el-radio-group v-model="viewAdd.data.type">
@@ -189,7 +190,7 @@
         </el-form-item>
         <el-form-item
           label="数据定义："
-          prop='defined'
+          prop="defined"
         >
           <el-input
             type="textarea"
@@ -200,7 +201,7 @@
         </el-form-item>
         <el-form-item
           label="是否字典："
-          prop='isDic'
+          prop="isDic"
         >
           <template>
             <el-radio-group v-model="viewAdd.data.isDic">
@@ -396,13 +397,19 @@ export default {
       },
       //数据新增功能
       viewAdd: {
-        data: {},
+        data: {
+            name:"",
+            type:"",
+            defined:"",
+            isDic:"",
+            description:""
+        },
         show: false
       },
       //数据修改功能
       viewEdit: {
         index: "",
-        data: "",
+        data: {},
         show: false
       },
       //数据删除功能
@@ -730,7 +737,12 @@ export default {
     _getDatasetAttrs(val) {
       console.log("_getDatasetAttrs", val);
       this._DatasetAttrs = val;
+    },
+    //是否字典 过滤器 改 t/f 为  是/否
+    dicFilter(bool){
+        return bool.isDic == "true" ? "是" : bool.isDic == "false" ? "否" : "未知";
     }
   }
+  
 };
 </script>

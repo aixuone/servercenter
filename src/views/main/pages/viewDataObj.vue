@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="resource">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <div class="breadxian"></div>
       <el-breadcrumb-item>{{headerTitle}}</el-breadcrumb-item>
@@ -24,6 +24,7 @@
           prop="id"
           label="ID"
           width="50"
+          fixed
         ></el-table-column>
         <el-table-column
           prop="columnName"
@@ -66,6 +67,7 @@
         <el-table-column
           prop="isNull"
           label="是否为空"
+          :formatter="nullFilter"
         ></el-table-column>
         <el-table-column
           prop="indexType"
@@ -75,11 +77,13 @@
         <el-table-column
           prop="isKey"
           label="是否主键"
+          :formatter="keyFilter"
         ></el-table-column>
         <el-table-column
           prop="isIncrement"
           label="自增序列"
           width="100"
+          :formatter="incrementFilter"
         ></el-table-column>
         <el-table-column
           label="操作"
@@ -419,7 +423,7 @@
       </div>
     </el-dialog>
     <!-- 对话框 结束 -->
-    <div style="width:100%;position:absolute;bottom:10px;left:0%;text-align:center;">
+    <div style="width:100%;position:absolute;bottom:0px;left:0%;text-align:center;">
         <dictBindAttr :resId="resId"></dictBindAttr>
     </div>
   </div>
@@ -859,12 +863,20 @@ export default {
     addCancel(){
         this.viewAdd.show = false
         this.$refs['form'].resetFields();
+    },
+    //是否为空 过滤器 改 t/f 为  是/否
+    nullFilter(bool){
+        return bool.isNull == "true" ? "是" : bool.isNull == "false" ? "否" : "未知";
+    },
+    //是否主键 过滤器 改 t/f 为  是/否
+    keyFilter(bool){
+        return bool.isKey == "true" ? "是" : bool.isKey == "false" ? "否" : "未知";
+    },
+    //自增序列 过滤器
+    incrementFilter(bool){
+        return bool.isIncrement == "true" ? "是" : bool.isIncrement == "false" ? "否" : "未知";
     }
-
-
-
-
-
+    
   }
 };
 </script>
