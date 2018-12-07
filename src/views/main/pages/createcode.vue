@@ -119,8 +119,6 @@
     name: "createcode",
     data() {
       return {
-        //服务器地址
-        base_url: "http://localhost:19081",
         //数据搜索功能
         view: {
           data: {
@@ -158,7 +156,7 @@
     },
     methods: {
       tables() {
-        axios.post(this.base_url + '/data/object/list',
+        axios.post('/createcode/data/object/list',
           {
             type: '',
             isDic: '',
@@ -198,7 +196,7 @@
               break;
           }
         }
-        axios.post(this.base_url + '/data/object/attribute/list',
+        axios.post('/createcode/data/object/attribute/list',
           {
             resId: obj.id,
             pageInfo: {
@@ -222,7 +220,7 @@
                 objectList: stringObj.replace("\"", "\'")
               }
               console.log("params", params);
-              axios.post('http://localhost:8081/generate/code/res', params
+              axios.post('/createcode/generate/code/res', params
               )
                 .then(resp => {
                   if (resp.data.success) {
@@ -275,7 +273,7 @@
           url:this.viewDb.data.url,
           password:this.viewDb.data.password
         }
-        axios.post('http://localhost:8081/gen/code', params)
+        axios.post('/createcode/gen/code', params)
           .then(resp => {
             if (resp.data.success) {
               Message.success("生成代码成功");
@@ -293,7 +291,7 @@
           return;
         }
         this.viewDb.show = true;
-        axios.post('http://localhost:8081/gen/table',
+        axios.post('/createcode/gen/table',
           {
             user: this.viewDb.data.user,
             url:this.viewDb.data.url,

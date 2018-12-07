@@ -1,15 +1,10 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 // import store from "../store";
-var API_ROOT;
-if (process.env.NODE_ENV=='development') {
-    API_ROOT = "http://192.168.18.188:19081";
-}else{
-    API_ROOT = "http://localhost:19081";
-}
+
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 const instance = axios.create({
-    baseURL: API_ROOT,
+    baseURL: '/',
     //跨站访问
     // withCredentials: true
 });
