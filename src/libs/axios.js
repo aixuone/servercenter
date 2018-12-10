@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 // import store from "../store";
-
+var baseURL = process.env.APIURL;
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
+console.log(axios);
 const instance = axios.create({
-    baseURL: '/',
+    baseURL : baseURL,
     //跨站访问
-    // withCredentials: true
+    withCredentials: true
 });
 
 instance.interceptors.request.use(

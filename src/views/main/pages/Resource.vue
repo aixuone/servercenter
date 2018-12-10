@@ -466,7 +466,7 @@ export default {
       })
       .catch(error => {
         console.log(error);
-        Message.error(error.data.message);
+        Message.error(error.message);
       });
   },
   methods: {
