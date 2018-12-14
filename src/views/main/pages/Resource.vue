@@ -55,6 +55,7 @@
       <el-form-item label="搜索对象">
         <el-input
           v-model="viewSearch.data.name"
+          @keyup.enter.native="handleSearch()"
           placeholder="输入名称/说明关键词"
         ></el-input>
       </el-form-item>
@@ -240,7 +241,7 @@
     </el-dialog>
     <!-- 修改 -->
     <el-dialog
-      title="修改数据集属性"
+      title="修改数据对象"
       :visible.sync="viewEdit.show"
       @close="closeDialog('editForm')"
       :close-on-click-modal="false"

@@ -3,5 +3,5 @@ const merge = require('webpack-merge')
 const prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  APIURL: '"http://localhost:19061/"'
+  APIURL: '"http://smart.tygps.com:13355/"'
 })

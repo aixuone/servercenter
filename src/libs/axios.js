@@ -6,8 +6,8 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 console.log(axios);
 const instance = axios.create({
     baseURL : baseURL,
-    //跨站访问
-    withCredentials: true
+    //跨站访问需要凭证？
+    // withCredentials: true
 });
 
 instance.interceptors.request.use(
