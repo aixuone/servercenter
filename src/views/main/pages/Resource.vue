@@ -154,7 +154,7 @@
     <!-- 对话框区 开始 -->
     <!-- 新增 -->
     <el-dialog
-      title="创建数据对象"
+      title="创建"
       :visible.sync="viewAdd.show"
       @close="closeDialog('addForm')"
       :close-on-click-modal="false"
@@ -241,7 +241,7 @@
     </el-dialog>
     <!-- 修改 -->
     <el-dialog
-      title="修改数据对象"
+      title="修改"
       :visible.sync="viewEdit.show"
       @close="closeDialog('editForm')"
       :close-on-click-modal="false"
@@ -314,6 +314,11 @@
         slot="footer"
         class="dialog-footer"
       >
+      <selectObjAttr
+          v-if="viewEdit.data.type=='数据集'"
+          :checkedList = "viewEdit.checkedList"
+          v-on:listenDatasetAttrs="_getDatasetAttrs"
+        ></selectObjAttr>
         <el-button
           type="danger"
           @click="editCancel()"
@@ -448,7 +453,7 @@ export default {
         ]
       },
 
-      //添加数据集 数据集属性列表
+      //添加修改数据集 数据集属性列表
       _DatasetAttrs: []
     };
   },
@@ -478,12 +483,38 @@ export default {
      * @param {Object} item 表格一行数据
      * @param {String} index 数据第几项
      */
-    handleEdit(item, index) {
+    async handleEdit(item, index) {
       console.log("edit", item, index);
       this.viewEdit.data = Object.assign({}, item);
       this.viewEdit.old = Object.assign({}, item);
       this.viewEdit.index = index;
-      this.viewEdit.show = true;
+      await api.getDataObjectAttrsList({
+          resId: this.viewEdit.data.id,
+          pageInfo: { page: 0, pageSize: 0 }
+        })
+        .then(res => {
+          console.log("修改数据集");
+          this.viewEdit.checkedList = this.formateAttrList(res.data.list);
+          console.log(this.viewEdit);
+          this.viewEdit.show = true;
+        })
+        .catch(error => {
+          console.log(error);
+          Message.error(error);
+        });
+    },
+    /**
+     * @function () formateAttrList
+     * description 改变格式 供组件 selectAttrOBj 使用
+     */
+    formateAttrList(val){
+      for(let i =0;i<val.length;++i){
+          val[i] = {
+            resId : val[i].resId,
+            id : val[i].id
+          };
+      }
+      return val;
     },
 
     /**
