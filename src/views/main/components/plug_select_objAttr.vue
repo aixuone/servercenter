@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;border: 1px solid #eee">
+  <div class="select_objAttr">
     <el-row :gutter="20">
       <el-col :span="12">
         <p>浏览对象：</p>
@@ -60,7 +60,8 @@ import { Message } from "element-ui";
 export default {
   name: "select_objAttr",
   props:{
-      objs:Array
+      objs:Array,
+      checkedList:Array
   },
   data() {
     return {
@@ -79,6 +80,10 @@ export default {
   created() {
     // 获取浏览对象列表
     this.objList = [];
+    console.log("select plug checkedList",this.checkedList);
+    if (this.checkedList&&this.checkedList.length>0) {
+      this.checkedAttr = this.checkedList;
+    }
     //属性列表
     this.attrList = [];
     if (!this.objs) {
@@ -123,6 +128,7 @@ export default {
               o['id'] = i.split(",")[2];
               arr[j] = o;
           });
+          console.log("供使用的checkedAttr",arr);
           return arr;
       }
   },
@@ -153,3 +159,10 @@ export default {
   }
 };
 </script>
+<style lang="css" scoped>
+  .select_objAttr{
+    width:100%;
+    border: 1px solid #eee;
+    text-align: left!important;
+  }
+</style>

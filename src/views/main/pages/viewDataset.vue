@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="resource">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <div class="breadxian"></div>
       <el-breadcrumb-item>{{headerTitle}}</el-breadcrumb-item>

@@ -167,7 +167,7 @@
     },
     methods: {
       tables() {
-        axios.post(this.base_url + '/data/object/list',
+        axios.post('/createcode/data/object/list',
           {
             type: '',
             isDic: '',

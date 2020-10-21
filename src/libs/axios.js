@@ -5,22 +5,23 @@ import { Message } from 'element-ui';
 const api_base_url = "http://192.168.18.252:19081";
 //const api_base_url = "http://smart.tygps.com:13355/datacenter";
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
+console.log(axios);
 const instance = axios.create({
-    baseURL: api_base_url,
-    //跨站访问
+    baseURL : baseURL,
+    //跨站访问需要凭证？
     // withCredentials: true
 });
-  
-  instance.interceptors.request.use(
+
+instance.interceptors.request.use(
     config => {
-      //  config.headers.Authorization = store.state.user.token;
-      // Spin.show()
-      // 在发送请求之前做些什么
-      return config;
+        //  config.headers.Authorization = store.state.user.token;
+        // Spin.show()
+        // 在发送请求之前做些什么
+        return config;
     },
     error => {
-      // 对请求错误做些什么
-      return Promise.reject(error);
+        // 对请求错误做些什么
+        return Promise.reject(error);
     }
   );
   
@@ -37,7 +38,7 @@ const instance = axios.create({
         return res;
     },
     error => {
-        console.log("error",error);
+        console.log("error->",error);
       if (!error.success) {
         Message.error("网络错误");
       } else if (error.response.data.code >= 500) {

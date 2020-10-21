@@ -7,7 +7,10 @@
     <div class="breadbottom"></div>
     <br>
     <p>
-      <el-button type="primary" @click="handleAdd()">添加</el-button>
+      <el-button
+        type="primary"
+        @click="handleAdd()"
+      >添加</el-button>
     </p>
     <br>
     <div class="viewTableClass">
@@ -35,8 +38,16 @@
         <!-- <el-table-column prop="isIncrement" label="自增序列" width="100" :formatter="incrementFilter"></el-table-column> -->
         <el-table-column label="操作" width="200" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" size="small" @click="handleEdit(scope.row,scope.$index)">修改</el-button>
-            <el-button type="danger" size="small" @click="handleDelet(scope.row,scope.$index)">删除</el-button>
+            <el-button
+              type="primary"
+              size="small"
+              @click="handleEdit(scope.row,scope.$index)"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              size="small"
+              @click="handleDelet(scope.row,scope.$index)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -61,8 +72,14 @@
         <el-form-item label="字段名：" prop="columnName">
           <el-input v-model="viewAdd.data.columnName" placeholder="请输入字段名" @change="setAddName"></el-input>
         </el-form-item>
-        <el-form-item label="数据类型：" prop="jdbcType">
-          <el-select v-model="viewAdd.data.jdbcType" placeholder="请选择">
+        <el-form-item
+          label="数据类型："
+          prop="jdbcType"
+        >
+          <el-select
+            v-model="viewAdd.data.jdbcType"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in plugs.select1"
               :key="item.value"
@@ -71,17 +88,32 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="数据长度：" prop="length">
-          <el-input v-model="viewAdd.data.length" placeholder="请输入数据长度"></el-input>
+        <el-form-item
+          label="数据长度："
+          prop="length"
+        >
+          <el-input
+            v-model="viewAdd.data.length"
+            placeholder="请输入数据长度"
+          ></el-input>
         </el-form-item>
         <el-form-item label="属性名：" prop="name">
           <el-input v-model="viewAdd.data.name" placeholder="请输入属性名"></el-input>
         </el-form-item>
         <el-form-item label="说明：">
-          <el-input v-model="viewAdd.data.description" placeholder="请输入说明"></el-input>
+          <el-input
+            v-model="viewAdd.data.description"
+            placeholder="请输入说明"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="类型：" prop="type">
-          <el-select v-model="viewAdd.data.type" placeholder="请选择">
+        <el-form-item
+          label="类型："
+          prop="type"
+        >
+          <el-select
+            v-model="viewAdd.data.type"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in plugs.select2"
               :key="item.value"
@@ -121,7 +153,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="规则：">
-          <el-input v-model="viewAdd.data.rule" placeholder="请输入规则"></el-input>
+          <el-input
+            v-model="viewAdd.data.rule"
+            placeholder="请输入规则"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="索引类型：">
@@ -133,20 +168,41 @@
         </el-form-item>
         <el-form-item label="是否为空：" v-show="viewAdd.data.indexType!='唯一键'">
           <template>
-            <el-radio v-model="viewAdd.data.isNull" label="true">是</el-radio>
-            <el-radio v-model="viewAdd.data.isNull" label="false">否</el-radio>
+            <el-radio
+              v-model="viewAdd.data.isNull"
+              label="true"
+            >是</el-radio>
+            <el-radio
+              v-model="viewAdd.data.isNull"
+              label="false"
+            >否</el-radio>
           </template>
         </el-form-item>
         <!--<el-form-item label="自增序列：" v-show="viewAdd.data.indexType=='唯一键'">
           <template>
-            <el-radio v-model="viewAdd.data.isIncrement" label="true">是</el-radio>
-            <el-radio v-model="viewAdd.data.isIncrement" label="false">否</el-radio>
+            <el-radio
+              v-model="viewAdd.data.isIncrement"
+              label="true"
+            >是</el-radio>
+            <el-radio
+              v-model="viewAdd.data.isIncrement"
+              label="false"
+            >否</el-radio>
           </template>
         </el-form-item>-->
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="addCancel()">取消</el-button>
-        <el-button type="primary" @click="addSingle()">确定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="danger"
+          @click="addCancel()"
+        >取消</el-button>
+        <el-button
+          type="primary"
+          @click="addSingle()"
+        >确定</el-button>
       </div>
     </el-dialog>
     <!-- 修改 -->
@@ -156,7 +212,10 @@
           <el-input v-model="viewEdit.data.columnName" placeholder="请输入字段名" @change="setEditName"></el-input>
         </el-form-item>
         <el-form-item label="数据类型：">
-          <el-select v-model="viewEdit.data.jdbcType" placeholder="请选择">
+          <el-select
+            v-model="viewEdit.data.jdbcType"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in plugs.select1"
               :key="item.value"
@@ -166,16 +225,25 @@
           </el-select>
         </el-form-item>
         <el-form-item label="数据长度：">
-          <el-input v-model="viewEdit.data.length" placeholder="请输入数据长度"></el-input>
+          <el-input
+            v-model="viewEdit.data.length"
+            placeholder="请输入数据长度"
+          ></el-input>
         </el-form-item>
         <el-form-item label="属性名：" prop="name">
           <el-input v-model="viewEdit.data.name" placeholder="请输入属性名"></el-input>
         </el-form-item>
         <el-form-item label="说明：">
-          <el-input v-model="viewEdit.data.description" placeholder="请输入说明"></el-input>
+          <el-input
+            v-model="viewEdit.data.description"
+            placeholder="请输入说明"
+          ></el-input>
         </el-form-item>
         <el-form-item label="类型：">
-          <el-select v-model="viewEdit.data.type" placeholder="请选择">
+          <el-select
+            v-model="viewEdit.data.type"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in plugs.select2"
               :key="item.value"
@@ -215,7 +283,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="规则：">
-          <el-input v-model="viewEdit.data.rule" placeholder="请输入规则"></el-input>
+          <el-input
+            v-model="viewEdit.data.rule"
+            placeholder="请输入规则"
+          ></el-input>
         </el-form-item>
         <el-form-item label="索引类型：" prop="indexType">
           <el-select v-model="viewEdit.data.indexType" placeholder="请选择" @change="indexChange">
@@ -226,28 +297,63 @@
         </el-form-item>
         <el-form-item label="是否为空：" prop="isNull" v-show="viewEdit.data.indexType!='唯一键'">
           <template>
-            <el-radio v-model="viewEdit.data.isNull" label="true">是</el-radio>
-            <el-radio v-model="viewEdit.data.isNull" label="false">否</el-radio>
+            <el-radio
+              v-model="viewEdit.data.isNull"
+              label="true"
+            >是</el-radio>
+            <el-radio
+              v-model="viewEdit.data.isNull"
+              label="false"
+            >否</el-radio>
           </template>
         </el-form-item>
         <!-- <el-form-item label="自增序列：" prop="isIncrement" v-show="viewEdit.data.indexType=='唯一键'">
           <template>
-            <el-radio v-model="viewEdit.data.isIncrement" label="true">是</el-radio>
-            <el-radio v-model="viewEdit.data.isIncrement" label="false">否</el-radio>
+            <el-radio
+              v-model="viewEdit.data.isIncrement"
+              label="true"
+            >是</el-radio>
+            <el-radio
+              v-model="viewEdit.data.isIncrement"
+              label="false"
+            >否</el-radio>
           </template>
         </el-form-item> -->
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="editCancel()">取消</el-button>
-        <el-button type="primary" @click="editSingle()">确定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="danger"
+          @click="editCancel()"
+        >取消</el-button>
+        <el-button
+          type="primary"
+          @click="editSingle()"
+        >确定</el-button>
       </div>
     </el-dialog>
     <!-- 删除 -->
-    <el-dialog title="删除" :visible.sync="viewDelet.show" width="30%" id="viewDelet">
+    <el-dialog
+      title="删除"
+      :visible.sync="viewDelet.show"
+      width="30%"
+      id="viewDelet"
+    >
       <div class="modal-body">您确定删除要删除该项吗?</div>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="viewDelet.show = false">取消</el-button>
-        <el-button type="primary" @click="deletSingle()">确定</el-button>
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="danger"
+          @click="viewDelet.show = false"
+        >取消</el-button>
+        <el-button
+          type="primary"
+          @click="deletSingle()"
+        >确定</el-button>
       </div>
     </el-dialog>
     <!-- 对话框 结束 
@@ -323,6 +429,8 @@ export default {
       // booleans:true, //按钮的禁用和不禁用状态
       headerTitle: "对象属性列表",
       resId: "",
+      //组件dict 显示
+      viewDict: true,
       //页面表格
       viewTable: {
         //dom元素id
@@ -458,6 +566,10 @@ export default {
     },
     //获取表格数据
     handleSearch() {
+        this.viewDict = false
+        this.$nextTick(() => {
+        this.viewDict = true
+        })
       api
         .getDataObjectAttrsList({
           resId: this.resId,

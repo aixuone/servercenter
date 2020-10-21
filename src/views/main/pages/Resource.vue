@@ -96,7 +96,7 @@
 
     <!-- 新增 -->
     <el-dialog
-      title="创建数据对象"
+      title="创建"
       :visible.sync="viewAdd.show"
       @close="closeDialog('addForm')"
       :close-on-click-modal="false"
@@ -500,7 +500,7 @@ export default {
      * @param {Object} item 表格一行数据
      * @param {String} index 数据第几项
      */
-    handleEdit(item, index) {
+    async handleEdit(item, index) {
       console.log("edit", item, index);
       this.viewEdit.data = Object.assign({}, item);
       this.viewEdit.old = Object.assign({}, item);

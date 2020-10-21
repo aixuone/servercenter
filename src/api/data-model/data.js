@@ -14,7 +14,7 @@ export default {
      */
     getDataObjectsList: params => {
         console.log("参数",params);
-        return axios.post('/data/object/list', params)
+        return axios.post('/datacenter/data/object/list', params)
         .then(res => {
             console.log("参数中返回的res",res)
             console.log("参数中返回的data",res.data)
@@ -26,28 +26,28 @@ export default {
      * @description 新增数据对象
      */
     addDataObject: params => {
-        return axios.post('/data/object/add', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object/add', params).then(res => {return res.data});
     },
     /**
      * @api deleteDataObject
      * @description 删除数据对象
      */
     deleteDataObject: params => {
-        return axios.post('/data/object/delete', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object/delete', params).then(res => {return res.data});
     },
     /**
      * @api editDataObject
      * @description 修改数据对象
      */
     editDataObject: params => {
-        return axios.post('/data/object', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object', params).then(res => {return res.data});
     },
     /**
      * @api getDataObjectAttrsList
      * @description 查询数据对象属性列表
      */
     getDataObjectAttrsList: params => {
-        return axios.post('/data/object/attribute/list', params).then(res => {return res.data;});
+        return axios.post('/datacenter/data/object/attribute/list', params).then(res => {return res.data;});
     },
     /**
      * @api getDataObjectAttrDicList
@@ -61,14 +61,14 @@ export default {
      * @description 新增数据对象属性
      */
     addDataObjectAttr: params => {
-        return axios.post('/data/object/attributes', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object/attributes', params).then(res => {return res.data});
     },
     /**
      * @api deleteDataObjectAttr
      * @description 删除数据对象属性
      */
     deleteDataObjectAttr: params => {
-        return axios.post('/data/object/attribute/delete', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object/attribute/delete', params).then(res => {return res.data});
     },
     /**
      * @api editDataObjectAttr
@@ -76,14 +76,14 @@ export default {
      */
     editDataObjectAttr: params => {
         
-        return axios.post('/data/object/attribute/update', params).then(res => {return res.data});
+        return axios.post('/datacenter/data/object/attribute/update', params).then(res => {return res.data});
     },
      /**
      * @api viewData
      * @description 查看数据
      */
     viewData: params =>{
-        return axios.post('/data/retrieve',params).then(res =>{ return res.data});
+        return axios.post('/datacenter/data/retrieve',params).then(res =>{ return res.data});
     },
      /**
      * @api dictBind
