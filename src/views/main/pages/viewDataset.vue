@@ -13,7 +13,7 @@
       >添加</el-button>
     </p>
     <br>
-    <div class="viewTableClass">
+    <div class="viewTableClass" style="height:500px;">
       <el-table
         :data="viewTable.data"
         border
@@ -319,14 +319,15 @@ export default {
       plugs: {
         select1: [
           { label: "varchar", value: "varchar" },
+          { label: "integer", value: "integer" },
+          { label: "double", value: "double" },
+          { label: "float", value: "float" },
+          { label: "datetime", value: "datetime" },
+          { label: "bigint", value: "bigint" },
           { label: "char", value: "char" },
           { label: "tinyint", value: "tinyint" },
           { label: "smallint", value: "smallint" },
           { label: "mediumint", value: "mediumint" },
-          { label: "integer", value: "integer" },
-          { label: "bigint", value: "bigint" },
-          { label: "float", value: "float" },
-          { label: "double", value: "double" },
           { label: "decimal", value: "decimal" },
           { label: "tinytext", value: "tinytext" },
           { label: "text", value: "text" },

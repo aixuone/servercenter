@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 // import store from "../store";
-const api_base_url = "http://192.168.18.188:19081";
-// const api_base_url = "http://localhost:19081";
+//const api_base_url = "http://192.168.18.188:19081";
+const api_base_url = "http://192.168.18.252:19081";
+//const api_base_url = "http://smart.tygps.com:13355/datacenter";
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 const instance = axios.create({
     baseURL: api_base_url,
@@ -30,7 +31,7 @@ const instance = axios.create({
     //   if (res.data !== "" && res.data.code !== 200) {
         if(res.data.success !== true){
             console.log("res.data.success",res);
-            Message.error("传输错误，"+res.data.code);
+            Message.error("传输错误，"+res.data.message);
             return Promise.reject(res);
         }
         return res;

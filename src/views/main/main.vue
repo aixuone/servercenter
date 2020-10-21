@@ -28,20 +28,26 @@
           <el-menu-item index="1" route="/resource">
             <i class="fa fa-tasks"></i>资源目录
           </el-menu-item>
-          <el-menu-item index="2" route="/createcode">
+          <el-menu-item index="2" route="/resourcetype">
+            <i class="fa fa-tasks"></i>资源分类
+          </el-menu-item>
+          <el-menu-item index="3" route="/createcode">
             <i class="fa fa-codepen"></i>代码生成
           </el-menu-item>
-          <el-menu-item index="3" route="/demo">
+          <el-menu-item index="4" route="/createpartcode">
+            <i class="fa fa-codepen"></i>代码片段生成
+          </el-menu-item>
+          <el-menu-item index="5" route="/demo">
             <i class="fa fa-page"></i>模版demo
           </el-menu-item>
         </el-menu>
       </el-aside>
-
-      <el-container>
-        <el-main>
-          <router-view/>
-        </el-main>
-      </el-container>
+      <el-main>
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -61,6 +67,7 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       this.keyIndex = key;
+      this.activeIndex = key;
       console.log(key, keyPath);
     }
   },

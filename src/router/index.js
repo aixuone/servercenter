@@ -54,13 +54,33 @@ export default new Router({
             component: () => import('@/views/main/pages/createcode.vue')
           },
           {
+            path: "/createpartcode",
+            name: "createpartcode",
+            meta: {
+              title: "代码片段生成",
+              hideInMenu: false
+            },
+            component: () => import('@/views/main/pages/createpartcode.vue')
+          },
+          {
             path: "/resource",
             name: "Resource",
             meta: {
               title: "资源目录",
-              hideInMenu: false
+              hideInMenu: false,
+              keepAlive: true
             },
             component: () => import('@/views/main/pages/Resource.vue')
+          },
+          {
+            path: "/resourcetype",
+            name: "ResourceType",
+            meta: {
+              title: "资源分类",
+              hideInMenu: false,
+              keepAlive: true
+            },
+            component: () => import('@/views/main/pages/ResourceType.vue')
           },
           {
             path: "/resource/dataset/:dataobj",
@@ -88,6 +108,15 @@ export default new Router({
               hideInMenu: true
             },
             component: () => import('@/views/main/pages/viewData.vue')
+          },
+          {// 查看数据集数据
+            path: "/resource/:dataset/dataset",
+            name: "viewDataSet",
+            meta: {
+              title: "数据集",
+              hideInMenu: true
+            },
+            component: () => import('@/views/main/pages/viewDatas.vue')
           }
         ],
     },

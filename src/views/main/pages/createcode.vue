@@ -17,30 +17,38 @@
       <el-form-item label="模块名">
         <el-input v-model="view.data.modelName" placeholder="请输入模块名"></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="confirm">确定</el-button>
-      </el-form-item>
-    </el-form>
-    <el-dialog title="生成代码" :visible.sync="view.show" width="30%" id="viewDS">
-      <el-form :model="view.data" label-position="right" label-width="130px">
-        <el-form-item label="资源目录" prop="tableNames">
-          <el-select v-model="view.data.index" placeholder="请选择">
-            <el-option v-for="(item,index) in view.list" :label="item.name" :value="index" :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="表说明">
-          <el-input v-model="view.data.tableAnnotation" placeholder="表说明"></el-input>
-        </el-form-item>
-        <el-form-item label="保存路径">
-          <el-input v-model="view.data.diskPath" placeholder="保存路径"></el-input>
-        </el-form-item>
+      <el-form-item label="生成方式">
+        <el-select v-model="view.data.genWay" placeholder="请选择" sytle="width:80px;">
+          <el-option label="调用Jar包" value="1"></el-option>
+          <el-option label="调用Http方式" value="2"></el-option>
+           <el-option label="直接生成" value="3"></el-option>
+         </el-select>
+       </el-form-item>
 
-        <el-form-item label="选择文件类型" prop="files">
-          <el-checkbox-group v-model="view.data.files">
-            <p><el-checkbox label="Vue"></el-checkbox></p>
-            <p><el-checkbox label="Controller"></el-checkbox></p>
-            <p><el-checkbox label="impl&service"></el-checkbox></p>
-            <!--<el-checkbox label="dao" value="Dao.java"></el-checkbox>-->
+       <el-form-item>
+         <el-button type="primary" @click="confirm">确定</el-button>
+       </el-form-item>
+     </el-form>
+     <el-dialog title="生成代码" :visible.sync="view.show" width="30%" id="viewDS">
+       <el-form :model="view.data" label-position="right" label-width="130px">
+         <el-form-item label="资源目录" prop="tableNames">
+           <el-select v-model="view.data.index" placeholder="请选择">
+             <el-option v-for="(item,index) in view.list" :label="item.name" :value="index" :key="index"></el-option>
+           </el-select>
+         </el-form-item>
+         <el-form-item label="表说明">
+           <el-input v-model="view.data.tableAnnotation" placeholder="表说明"></el-input>
+         </el-form-item>
+         <el-form-item label="保存路径">
+           <el-input v-model="view.data.diskPath" placeholder="保存路径"></el-input>
+         </el-form-item>
+
+         <el-form-item label="选择文件类型" prop="files">
+           <el-checkbox-group v-model="view.data.files">
+             <p><el-checkbox label="Vue" vaule="Vue"></el-checkbox></p>
+             <p><el-checkbox label="Controller" vaule="Controller"></el-checkbox></p>
+             <p><el-checkbox label="impl&service" vaule="impl&service"></el-checkbox></p>
+             <!--<el-checkbox label="dao" value="Dao.java"></el-checkbox>-->
             <!--<el-checkbox label="mapper" value="Mapper.xml"></el-checkbox>-->
             <!--<el-checkbox label="entity" value=".java"></el-checkbox>-->
           </el-checkbox-group>
@@ -120,6 +128,7 @@
     data() {
       return {
         //服务器地址
+        // base_url: "http://smart.tygps.com:13355/createcode",
         base_url: "http://localhost:19081",
         //数据搜索功能
         view: {
@@ -175,7 +184,7 @@
           })
       },
       confirm(){
-        if(this.view.data.author == '' || this.view.data.packageName == '' || this.view.data.modelName == ''){
+        if(this.view.data.author == '' || this.view.data.packageName == '' || this.view.data.modelName == '' || typeof(this.view.data.genWay) == 'undefined'){
           Message.error("请填写完整！");
           return;
         }
@@ -191,13 +200,18 @@
               break;
             case "Controller":
               this.view.data.files[i] = "Controller.java";
+              this.view.data.files.push(".java");
               break;
             case "impl&service":
               this.view.data.files[i] = "ServiceImpl.java";
               this.view.data.files.push("Service.java");
+              this.view.data.files.push("Dao.java");
+              this.view.data.files.push("Mapper.xml");
               break;
           }
         }
+        console.log("objtype:" + obj.type);
+        if(obj.type=='对象') {
         axios.post(this.base_url + '/data/object/attribute/list',
           {
             resId: obj.id,
@@ -215,14 +229,16 @@
                 author: this.view.data.name,
                 tableAnnotation: this.view.data.tableAnnotation,
                 tableName: obj.defined,
+                beanName: obj.name,
                 diskPath: this.view.data.diskPath,
                 packageName: this.view.data.packageName,
+                genWay: this.view.data.genWay,
                 modelName: this.view.data.modelName,
                 isDic: obj.isDic,
                 objectList: stringObj.replace("\"", "\'")
               }
               console.log("params", params);
-              axios.post('http://localhost:8081/generate/code/res', params
+              axios.post('http://localhost:19062/generate/code/res', params
               )
                 .then(resp => {
                   if (resp.data.success) {
@@ -237,6 +253,62 @@
           }).catch(err => {
           Message.error('网络错误。')
         });
+        } else if(obj.type=="数据集") {
+          axios.post(this.base_url + '/datacomment/list',
+          {
+            resId: obj.id,
+            pageInfo: {
+              page: 0,
+              pageSize: 0
+            }
+          })
+          .then(res => {
+            if (res.data.success) {
+              var resultArray = [];
+              for (var i in res.data.data.list) {
+                var result = {
+                  "jdbcType": "varchar",
+                  "description": res.data.data.list[i].comment,
+                  "columnName": res.data.data.list[i].name,
+                  "name": res.data.data.list[i].name,
+                  "type": "文本",
+                  "dicRes": -1,
+                  "isNull": "true"
+                };
+                resultArray.push(result);
+              }
+              var stringObj = JSON.stringify({"list": resultArray});
+              var params = {
+                resId: obj.id,
+                suffixs: this.view.data.files,
+                author: this.view.data.name,
+                tableAnnotation: this.view.data.tableAnnotation,
+                tableName: obj.defined,
+                beanName: obj.name,
+                diskPath: this.view.data.diskPath,
+                packageName: this.view.data.packageName,
+                genWay: this.view.data.genWay,
+                modelName: this.view.data.modelName,
+                isDic: obj.isDic,
+                objectList: stringObj.replace("\"", "\'")
+              }
+              console.log("params", params);
+              axios.post('http://localhost:19062/generate/code/res', params
+              )
+                .then(resp => {
+                  if (resp.data.success) {
+                    Message.success("生成代码成功");
+                  } else {
+                    Message.success("生成代码失败"+res.data.message);
+                  }
+                }).catch(err => {
+                Message.error('生成代码失败，网络错误。')
+              });
+            }
+          }).catch(err => {
+          Message.error('网络错误。')
+        });
+        }
       },
       generate() {
         console.log("Dbfiles:" + this.viewDb.data.files);
@@ -256,7 +328,7 @@
               this.viewDb.data.files[i] = "Dao.java";
               break;
             case "mapper":
-              this.viewDb.data.files[i] = "Mapper.java";
+              this.viewDb.data.files[i] = "Mapper.xml";
               break;
             case "entity":
               this.viewDb.data.files[i] = ".java";
@@ -275,7 +347,7 @@
           url:this.viewDb.data.url,
           password:this.viewDb.data.password
         }
-        axios.post('http://localhost:8081/gen/code', params)
+        axios.post('http://localhost:19062/gen/code', params)
           .then(resp => {
             if (resp.data.success) {
               Message.success("生成代码成功");
@@ -287,13 +359,12 @@
         });
       },
       getTables() {
-        console.log("sssssssssss"+this.viewDb.data.user);
         if(this.viewDb.data.user == '' || this.viewDb.data.url == '' || this.viewDb.data.password == ''){
           Message.error("请填写完整！");
           return;
         }
         this.viewDb.show = true;
-        axios.post('http://localhost:8081/gen/table',
+        axios.post('http://localhost:19062/gen/table',
           {
             user: this.viewDb.data.user,
             url:this.viewDb.data.url,
